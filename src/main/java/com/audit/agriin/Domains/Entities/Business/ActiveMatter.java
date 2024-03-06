@@ -31,24 +31,4 @@ public class ActiveMatter {
     @OneToMany
     private List<Drug> drugs;
 
-//    /**
-//     * The timestamp indicating when the entity was created.
-//     */
-//    @CreationTimestamp
-//    @ReadOnlyProperty
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    @Column(name = "created_at", nullable = false, updatable = false)
-//    private Timestamp createdAt;
-//
-//    /**
-//     * The timestamp indicating when the entity was last updated.
-//     */
-//    @UpdateTimestamp
-//    @ReadOnlyProperty
-//    @LastModifiedDate
-//    @Column(name = "updated_at")
-//    @Temporal(TemporalType.TIMESTAMP)
-//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-//    private Timestamp updatedAt;
 }

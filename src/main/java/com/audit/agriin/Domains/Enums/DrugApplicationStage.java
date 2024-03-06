@@ -1,0 +1,8 @@
+package com.audit.agriin.Domains.Enums;
+
+public enum DrugApplicationStage {
+    PREVENTION,
+    FIRST_OUTBREAKS_APPEARANCE,
+    FIRST_OUTBREAKS_APPEARANCE_AND_PREVENTION,
+    FIRST_OUTBREAKS_APPEARANCE_AND_TREATMENT,
+}

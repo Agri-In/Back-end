@@ -1,10 +1,7 @@
 package com.audit.agriin.Domains.Entities.Business;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -25,6 +22,6 @@ public class Culture extends AbstractEntity<UUID> {
     @OneToOne
     private Variety variety;
 
-    @OneToMany
+    @OneToMany(mappedBy = "culture", fetch = FetchType.LAZY)
     private List<Parcel> parcels = new ArrayList<>();
 }

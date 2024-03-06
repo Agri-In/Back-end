@@ -1,6 +1,7 @@
 package com.audit.agriin.Domains.Entities.Business;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
+import com.audit.agriin.Domains.Enums.DosageUnit;
 import com.audit.agriin.Domains.Enums.DrugCharacter;
 import com.audit.agriin.Domains.Enums.DrugType;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import jdk.jfr.Description;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,9 +28,12 @@ public class Drug extends AbstractEntity<UUID> {
     private ActiveMatter activeMatter;
 
     @Column(name = "drug_dosage")
-    private String dosage;
+    private double dosage;
 
-    @OneToMany
+    @Enumerated(EnumType.STRING)
+    private DosageUnit dosageUnit;
+
+    @OneToMany(mappedBy = "drug", fetch = FetchType.LAZY)
     private Set<Enemy> enemies = new HashSet<>();
 
     @Column(name = "days_after_residue")
@@ -38,13 +43,17 @@ public class Drug extends AbstractEntity<UUID> {
     @Column(name = "max_application")
     private int maxApplication;
 
-    @OneToMany
+    @OneToMany(mappedBy = "drug", fetch = FetchType.LAZY)
     private Set<LMR> lmrs = new HashSet<>();
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private DrugType drugType;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private DrugCharacter drugCharacter;
+
+    @OneToMany(mappedBy = "drug", fetch = FetchType.LAZY)
+    private List<Treatment> treatments;
+
 
 }
