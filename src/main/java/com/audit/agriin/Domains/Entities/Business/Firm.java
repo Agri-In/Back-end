@@ -2,10 +2,7 @@ package com.audit.agriin.Domains.Entities.Business;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
 import com.audit.agriin.Domains.Entities.Common.FirmAssignment;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.*;
 
@@ -27,4 +24,13 @@ public class Firm extends AbstractEntity<UUID> {
 
     @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
     private List<FirmAssignment> firmAssignments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
+    private List<Parcel> parcels = new ArrayList<>();
+
+    @ManyToOne
+    private Audit audit;
+
+    @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
+    private List<FileStorage> fileStorages;
 }

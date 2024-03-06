@@ -1,4 +1,4 @@
-name: AgriIn
+name: agriin
 services:
   agriin:
     image: 'postgres:latest'
@@ -46,9 +46,9 @@ services:
     ports:
       - "8083:8084"
     depends_on:
-      aftas-db:
+      agriin:
         condition: service_healthy
-      aftas-cache:
+      agriin-cache:
         condition: service_healthy
     restart: no
     networks:

@@ -4,6 +4,5 @@ public enum DrugType {
     PESTICIDE,
     FERTILIZER,
     SEED,
-    MACHINARY,
     OTHER
 }
