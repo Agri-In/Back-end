@@ -14,6 +14,9 @@ import java.util.UUID;
 @Setter
 public class Parcel extends AbstractEntity<UUID> {
 
+    @Column(name = "parcel_name")
+    private String name;
+
     @Column(name = "parcel_surface_hectare")
     @Description("Parcel Surface in hectares")
     private double surface;
@@ -24,6 +27,6 @@ public class Parcel extends AbstractEntity<UUID> {
     @ManyToOne
     private Firm firm;
 
-    @OneToMany(mappedBy = "parcel", fetch = FetchType.LAZY)
-    private List<FileStorage> files;
+    @OneToOne
+    private FileStorage storage;
 }

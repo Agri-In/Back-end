@@ -1,13 +1,12 @@
 package com.audit.agriin.Domains.Entities.Business;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -16,15 +15,23 @@ import java.util.UUID;
 @Table(name = "file_storage")
 public class FileStorage extends AbstractEntity<UUID> {
 
-    @ManyToOne(optional = true)
+    @OneToOne(optional = true)
     private Audit audit;
 
-    @ManyToOne(optional = true)
+    @OneToOne(optional = true)
     private Firm firm;
 
-    @ManyToOne(optional = true)
+    @OneToOne(optional = true)
     private Parcel parcel;
 
-    @OneToOne
-    private File file;
+    @OneToOne(optional = true)
+    private AuditChecklist auditChecklist;
+
+    @OneToOne(optional = true)
+    private FirmAnalysis firmAnalysis;
+
+
+
+    @OneToMany
+    private List<File> files = new ArrayList<>();
 }
