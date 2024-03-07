@@ -15,12 +15,12 @@ import java.util.UUID;
 @Setter
 public class Firm extends AbstractEntity<UUID> {
 
-    @Column(name = "firm_name")
+    @Column(name = "firm_name", unique = true, nullable = false)
     private String name;
 
     @Column(name = "firm_surface_hectare")
     @Description("Firm Surface in hectares")
-    private String surface;
+    private double surface;
 
     @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
     private List<FirmAssignment> firmAssignments = new ArrayList<>();
@@ -28,9 +28,12 @@ public class Firm extends AbstractEntity<UUID> {
     @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
     private List<Parcel> parcels = new ArrayList<>();
 
+    @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
+    private List<FirmAnalysis> firmAnalyses = new ArrayList<>();
+
     @ManyToOne
     private Audit audit;
 
-    @OneToMany(mappedBy = "firm", fetch = FetchType.LAZY)
-    private List<FileStorage> fileStorages;
+    @OneToOne
+    private FileStorage storage;
 }

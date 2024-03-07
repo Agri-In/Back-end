@@ -18,7 +18,7 @@ import java.util.UUID;
 @Setter
 public class Drug extends AbstractEntity<UUID> {
 
-    @Column(name = "commercial_name")
+    @Column(name = "commercial_name", unique = true, nullable = false)
     private String commercialName;
 
     @Column(name = "drug_description")
