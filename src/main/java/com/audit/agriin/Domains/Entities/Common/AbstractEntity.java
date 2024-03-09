@@ -37,6 +37,6 @@ public abstract class AbstractEntity<ID extends Serializable> extends AuditableE
     private ID id;
 
 
-    @Column(name = "deleted", nullable = false)
-    private boolean deleted = false;
+//    @Column(name = "deleted", nullable = false, columnDefinition = "boolean default false")
+//    private boolean deleted = false;
 }

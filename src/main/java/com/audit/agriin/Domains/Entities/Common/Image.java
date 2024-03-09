@@ -1,6 +1,5 @@
 package com.audit.agriin.Domains.Entities.Common;
 
-import com.audit.agriin.Domains.Entities.NonCorporate.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -34,5 +33,5 @@ public class Image extends AbstractEntity<UUID>{
     private String url;
 
     @ManyToOne
-    private User user;
+    private ImageStorage storage;
 }

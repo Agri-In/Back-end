@@ -2,6 +2,7 @@ package com.audit.agriin.Domains.Entities.Corporate;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
 import com.audit.agriin.Domains.Entities.Common.Address;
+import com.audit.agriin.Domains.Entities.Common.ImageStorage;
 import com.audit.agriin.Domains.Enums.CorporationSize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -50,4 +51,8 @@ public class Corporation extends AbstractEntity<UUID> {
     @Pattern(regexp = "0\\d{9}", message = "Phone number must match the format '0XXXXXXXXX'")
     @Column(unique = true)
     private String phoneNumber;
+
+    @OneToOne
+    @ToString.Exclude
+    private ImageStorage storage;
 }

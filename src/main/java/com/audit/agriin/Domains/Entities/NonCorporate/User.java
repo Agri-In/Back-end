@@ -2,7 +2,7 @@ package com.audit.agriin.Domains.Entities.NonCorporate;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
 import com.audit.agriin.Domains.Entities.Common.Address;
-import com.audit.agriin.Domains.Entities.Common.Image;
+import com.audit.agriin.Domains.Entities.Common.ImageStorage;
 import com.audit.agriin.Domains.Enums.Gender;
 import com.audit.agriin.Domains.Enums.IdentityDocumentType;
 import com.audit.agriin.Domains.Enums.UserStatus;
@@ -46,10 +46,9 @@ public class User extends AbstractEntity<UUID> implements UserDetails {
     /**
      * The path to the user's image.
      */
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne
     @ToString.Exclude
-    private List<Image> images;
+    private ImageStorage storage;
 
     /**
      * The user's phone number.
