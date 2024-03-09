@@ -32,4 +32,6 @@ public interface AuditRepository extends JpaRepository<Audit, UUID> {
     Optional<List<Audit>> findAuditsByDateBetweenAndStatus(LocalDate startDate, LocalDate endDate, AuditStatus status);
 
     Optional<List<Audit>> findAuditsByFirmsContaining(Firm firm);
+
+
 }

@@ -1,6 +1,5 @@
 package com.audit.agriin.Repositories;
 
-import com.audit.agriin.Domains.Entities.Business.ActiveMatter;
 import com.audit.agriin.Domains.Entities.NonCorporate.Group;
 import com.audit.agriin.Domains.Entities.NonCorporate.User;
 import com.audit.agriin.Domains.Enums.UserStatus;
@@ -57,9 +56,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     /**
      * Retrieves a page of users with a specific role.
      *
-     * @param role     The role of the users to retrieve.
+     * @param group     The role of the users to retrieve.
      * @param pageable Pageable object for pagination.
      * @return A page of users with the specified role.
      */
-    Page<User> findAllByUserGroupsContaining(Group role, Pageable pageable);
+    Page<User> findAllByUserGroupsContaining(Group group, Pageable pageable);
 }
