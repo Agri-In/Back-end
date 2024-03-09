@@ -23,5 +23,5 @@ public class File extends AbstractEntity<UUID> {
     private String url;
 
     @ManyToOne
-    private FileStorage fileStorage;
+    private FileOwner fileOwner;
 }

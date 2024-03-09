@@ -6,7 +6,6 @@ import jdk.jfr.Description;
 import lombok.*;
 
 
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -28,5 +27,5 @@ public class Parcel extends AbstractEntity<UUID> {
     private Firm firm;
 
     @OneToOne
-    private FileStorage storage;
+    private FileOwner storage;
 }

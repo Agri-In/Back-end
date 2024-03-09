@@ -1,7 +1,6 @@
 package com.audit.agriin.Domains.Entities.Business;
 
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
-import com.audit.agriin.Domains.Entities.NonCorporate.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class Operator extends AbstractEntity<UUID> {
 
     private String phone;
 
-    @OneToMany
+    @OneToMany(mappedBy = "operator")
     private List<Treatment> treatments = new ArrayList<>();
 
 }

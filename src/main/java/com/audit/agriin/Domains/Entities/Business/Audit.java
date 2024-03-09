@@ -5,7 +5,6 @@ import com.audit.agriin.Domains.Enums.AuditStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.integration.annotation.Default;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,11 +22,14 @@ public class Audit extends AbstractEntity<UUID> {
     @OneToOne
     private AuditType auditType;
 
-    @OneToMany(mappedBy = "audit", fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(name = "audit_firm",
+            joinColumns = @JoinColumn(name = "audit_id"),
+            inverseJoinColumns = @JoinColumn(name = "firm_id"))
     private List<Firm> firms = new ArrayList<>();
 
     @OneToOne
-    private FileStorage storage;
+    private FileOwner storage;
 
     @Enumerated(EnumType.STRING)
     private AuditStatus status = AuditStatus.PENDING;

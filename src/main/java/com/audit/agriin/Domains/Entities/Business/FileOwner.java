@@ -5,33 +5,31 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "file_storage")
-public class FileStorage extends AbstractEntity<UUID> {
+@Table(name = "file_owner")
+public class FileOwner extends AbstractEntity<UUID> {
 
-    @OneToOne(optional = true)
+    @OneToOne
     private Audit audit;
 
-    @OneToOne(optional = true)
+    @OneToOne
     private Firm firm;
 
-    @OneToOne(optional = true)
+    @OneToOne
     private Parcel parcel;
 
-    @OneToOne(optional = true)
+    @OneToOne
     private AuditChecklist auditChecklist;
 
-    @OneToOne(optional = true)
+    @OneToOne
     private FirmAnalysis firmAnalysis;
 
 
-
-    @OneToMany
-    private List<File> files = new ArrayList<>();
+    @OneToMany(mappedBy = "fileOwner", fetch = FetchType.LAZY)
+    private List<File> files;
 }
