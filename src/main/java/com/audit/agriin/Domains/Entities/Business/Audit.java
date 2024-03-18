@@ -19,7 +19,7 @@ public class Audit extends AbstractEntity<UUID> {
     @Temporal(TemporalType.DATE)
     private LocalDate date;
 
-    @OneToOne
+    @ManyToOne
     private AuditType auditType;
 
     @ManyToMany

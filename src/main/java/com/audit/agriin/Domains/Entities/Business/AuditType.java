@@ -3,10 +3,12 @@ package com.audit.agriin.Domains.Entities.Business;
 import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -23,4 +25,7 @@ public class AuditType extends AbstractEntity<UUID> {
 
     @OneToOne
     private AuditChecklist auditChecklist;
+
+    @OneToMany(mappedBy = "auditType")
+    private List<Audit> audits;
 }
