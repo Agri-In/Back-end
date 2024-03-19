@@ -1,15 +1,20 @@
 package com.audit.agriin.Domains.Entities.NonCorporate;
 
+import com.audit.agriin.Domains.Entities.Common.AbstractEntity;
+import com.audit.agriin.Domains.Entities.Common._Entity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name = "principle_groups")
-public class Group {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Getter
+@Setter
+public class Group extends AbstractEntity<UUID> {
+
     @Column(name = "code", unique = true, nullable = false)
     private String code;
     @Column(name = "group_name")

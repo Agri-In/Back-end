@@ -18,7 +18,7 @@ public class AuditChecklist extends AbstractEntity<UUID>{
     @OneToOne
     private AuditType auditType;
 
-    @OneToOne
+    @OneToOne(mappedBy = "files")
     private FileOwner storage;
 
 

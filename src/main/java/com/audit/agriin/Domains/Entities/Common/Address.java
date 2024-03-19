@@ -60,13 +60,6 @@ public class Address {
     private Integer building;
 
     /**
-     * The apartment number.
-     */
-    @Min(value = 1, message = "Apartment number must be greater than 0")
-    @Max(value = 32767, message = "Apartment number is too big")
-    private Integer apartment;
-
-    /**
      * The postal code.
      */
     @Min(value = 1001, message = "Invalid postal code")
@@ -93,7 +86,6 @@ public class Address {
                 Objects.equals(city, other.city) &&
                 Objects.equals(street, other.street) &&
                 Objects.equals(building, other.building) &&
-                Objects.equals(apartment, other.apartment) &&
                 Objects.equals(postalCode, other.postalCode);
     }
 }

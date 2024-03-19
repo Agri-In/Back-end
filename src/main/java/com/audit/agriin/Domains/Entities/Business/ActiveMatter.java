@@ -19,11 +19,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Embeddable
-public class ActiveMatter {
-
-    @Id
-    @Column(name = "active_matter_id")
-    private UUID id;
+public class ActiveMatter extends AbstractEntity<UUID>{
 
     @Column(name = "active_matter_name")
     private String name;
