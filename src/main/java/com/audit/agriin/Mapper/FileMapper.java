@@ -3,11 +3,9 @@ package com.audit.agriin.Mapper;
 import com.audit.agriin.Domains.DTOs.Entities.File.FileRequest;
 import com.audit.agriin.Domains.DTOs.Entities.File.FileResponse;
 import com.audit.agriin.Domains.Entities.Business.File;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -16,9 +14,15 @@ import java.util.UUID;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface FileMapper extends _Mapper<UUID, FileRequest, FileResponse, File> {
-    File toEntity(FileRequest fileRequest);
+//    File toEntity(FileRequest fileRequest);
+//
+//    @Mapping(source = "fileOwnerId", target = "fileOwner.id")
+//    File toEntity(FileResponse fileResponse);
 
-    FileRequest toDto(File file);
+    @Override
+    @Mapping(source = "fileOwner.id", target = "fileOwnerId")
+    FileResponse toResponse(File file);
 
-    File toEntity(FileResponse fileResponse);
+//    FileResponse toResponseFromEntity(File file);
+
 }

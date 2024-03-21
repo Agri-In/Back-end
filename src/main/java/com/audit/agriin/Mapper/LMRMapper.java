@@ -5,6 +5,7 @@ import com.audit.agriin.Domains.DTOs.Entities.LMR.LMRResponse;
 import com.audit.agriin.Domains.Entities.Business.LMR;
 import org.mapstruct.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -16,8 +17,21 @@ public interface LMRMapper extends _Mapper<UUID, LMRRequest, LMRResponse, LMR> {
     @Mapping(source = "activeMatterId", target = "activeMatter.id")
     LMR toEntity(LMRRequest LMRRequest);
 
-    @Mapping(source = "activeMatter.id", target = "activeMatterId")
-    LMRRequest toDto(LMR LMR);
 
+    @Mapping(source = "activeMatterName", target = "activeMatter.name")
+    @Mapping(source = "activeMatterId", target = "activeMatter.id")
     LMR toEntity(LMRResponse LMRResponse);
+
+//    @InheritInverseConfiguration(name = "toEntity")
+//    @Override
+//    LMRResponse toResponse(LMR LMR);
+//
+//    LMRResponse toResponseFromEntity(LMR LMR);
+
+////    @Override
+//    List<LMRResponse> toResponseFromEntity(List<LMR> entity);
+//
+////    @Override
+//    List<LMRResponse> toResponse(List<LMR> entity);
+
 }

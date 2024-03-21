@@ -7,10 +7,18 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Culture extends AbstractEntity<UUID> {
 
     @Column(name = "culture_name")

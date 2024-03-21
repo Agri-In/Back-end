@@ -3,13 +3,11 @@ package com.audit.agriin.Mapper;
 
 import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditRequest;
 import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditResponse;
-import com.audit.agriin.Domains.Entities.Business.Firm;
 import org.mapstruct.*;
 import com.audit.agriin.Domains.Entities.Business.Audit;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Mapper interface for converting between {@link Audit} DTOs and entities.
@@ -20,30 +18,35 @@ import java.util.stream.Collectors;
 @Mapper(
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        componentModel = MappingConstants.ComponentModel.SPRING
-)
+        componentModel = MappingConstants.ComponentModel.SPRING)
 public interface AuditMapper extends _Mapper<UUID, AuditRequest, AuditResponse, Audit> {
 
 
-    @Mapping(source = "auditTypeId", target = "auditType.id")
-    Audit toEntity(AuditRequest auditRequest);
+    Audit toEntity(AuditResponse auditResponse);
 
-    @Mapping(target = "firmIds", expression = "java(firmsToFirmIds(audit.getFirms()))")
-    @Mapping(source = "auditType.id", target = "auditTypeId")
-    AuditRequest toDto(Audit audit);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "auditTypeId", target = "auditType.id")
-    Audit partialUpdate(AuditRequest auditRequest, @MappingTarget Audit audit);
-
-    default List<UUID> firmsToFirmIds(List<Firm> firms) {
-        return firms.stream().map(Firm::getId).collect(Collectors.toList());
+    @AfterMapping
+    default void linkFiles(@MappingTarget Audit audit) {
+        audit.getStorage().getFiles().forEach(file -> file.setFileOwner(audit.getStorage()));
     }
-
-//    Audit toEntity(AuditResponse auditResponse);
-
-    AuditResponse toDto1(Audit audit);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Audit partialUpdate(AuditResponse auditResponse, @MappingTarget Audit audit);
+
+    @Override
+    @Mapping(source = "auditType.name", target = "auditType.name")
+    AuditResponse toResponse(Audit audit);
+
+//    AuditResponse toResponseFromEntity(Audit audit);
+
+//    Audit toEntity(AuditRequest auditRequest);
+
+//    List<Audit> toEntity(List<AuditRequest> entity);
+//
+//    @Override
+//    List<AuditResponse> toResponse(List<Audit> entity);
+//
+//    List<Audit> toEntityFromResponse(List<AuditResponse> entity);
+
+//    @Override
+//    Audit toEntityFromResponse(AuditResponse auditResponse);
 }

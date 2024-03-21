@@ -7,26 +7,34 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "file_owner")
 public class FileOwner extends AbstractEntity<UUID> {
 
-    @OneToOne
+    @OneToOne(mappedBy = "storage")
     private Audit audit;
 
-    @OneToOne
+    @OneToOne(mappedBy = "storage")
     private Firm firm;
 
-    @OneToOne
+    @OneToOne(mappedBy = "storage")
     private Parcel parcel;
 
-    @OneToOne
+    @OneToOne(mappedBy = "storage")
     private AuditChecklist auditChecklist;
 
-    @OneToOne
+    @OneToOne(mappedBy = "storage")
     private FirmAnalysis firmAnalysis;
 
 

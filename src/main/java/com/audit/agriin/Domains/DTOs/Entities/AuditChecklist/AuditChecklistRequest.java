@@ -1,8 +1,7 @@
 package com.audit.agriin.Domains.DTOs.Entities.AuditChecklist;
 
-import com.audit.agriin.Domains.DTOs.Entities.FileOwner.FileOwnerDto;
+import com.audit.agriin.Domains.DTOs.Entities.File.FileRequest;
 import com.audit.agriin.Domains.DTOs._Request;
-import com.audit.agriin.Domains.Entities.Business.File;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -14,6 +13,5 @@ import java.util.UUID;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record AuditChecklistRequest(String checklistName, UUID auditTypeId,
-                                    FileOwnerDto storage) implements _Request {
-
+                                    List<FileRequest> storageFiles) implements _Request {
 }

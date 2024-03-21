@@ -5,6 +5,7 @@ import com.audit.agriin.Domains.DTOs.Entities.Image.ImageResponse;
 import com.audit.agriin.Domains.Entities.Common.Image;
 import org.mapstruct.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -16,7 +17,21 @@ public interface ImageMapper extends _Mapper<UUID, ImageRequest, ImageResponse, 
     @Mapping(source = "storageId", target = "storage.id")
     Image toEntity(ImageRequest imageRequest);
 
-    @Mapping(source = "storage.id", target = "storageId")
-    ImageRequest toDto(Image image);
+//    @Mapping(source = "storage.id", target = "storageId")
+//    ImageRequest toDto(Image image);
 
+    @Mapping(source = "storageId", target = "storage.id")
+    Image toEntity(ImageResponse imageResponse);
+
+    @Override
+    @Mapping(source = "storage.id", target = "storageId")
+    ImageResponse toResponse(Image image);
+
+//    ImageResponse toResponseFromEntity(Image image);
+//
+//    @Override
+//    Image toEntityFromResponse(ImageResponse imageResponse);
+//
+//    @Override
+//    List<ImageResponse> toResponse(List<Image> entity);
 }

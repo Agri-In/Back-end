@@ -12,10 +12,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Drug extends AbstractEntity<UUID> {
 
     @Column(name = "commercial_name", unique = true, nullable = false)

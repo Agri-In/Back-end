@@ -6,14 +6,18 @@ import com.audit.agriin.Domains.Entities.Common.FirmAssignment;
 import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Firm extends AbstractEntity<UUID>{
 
     @Column(name = "firm_name", unique = true, nullable = false)

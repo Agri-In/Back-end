@@ -14,10 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Treatment extends AbstractEntity<UUID> {
 
     @OneToMany

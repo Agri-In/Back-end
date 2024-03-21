@@ -7,16 +7,22 @@ import com.audit.agriin.Domains.Entities.NonCorporate.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ImageStorage extends AbstractEntity<UUID>{
 
     @OneToOne

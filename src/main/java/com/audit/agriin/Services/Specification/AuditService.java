@@ -1,11 +1,13 @@
 package com.audit.agriin.Services.Specification;
 
+import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditRequest;
+import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditResponse;
 import com.audit.agriin.Domains.Entities.Business.Audit;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public interface AuditService extends _Service<AuditRequestt, AuditResponsee, UUID>{
+public interface AuditService extends _Service<AuditRequest, AuditResponse, UUID>{
     /**
      * Retrieves a competition by its unique identifier.
      *

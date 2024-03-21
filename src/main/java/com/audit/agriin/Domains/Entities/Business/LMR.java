@@ -7,10 +7,18 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LMR extends AbstractEntity<UUID> {
 
 
@@ -20,7 +28,7 @@ public class LMR extends AbstractEntity<UUID> {
     @Column(name = "lmr_name_mg/kg")
     private String residue_mg_kg;
 
-    @Embedded
+    @OneToOne
     private ActiveMatter activeMatter;
 
     @ManyToOne

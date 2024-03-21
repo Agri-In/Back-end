@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -16,9 +17,21 @@ import java.util.UUID;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface ActiveMatterMapper extends _Mapper<UUID, ActiveMatterRequest, ActiveMatterResponse, ActiveMatter> {
-    ActiveMatter toEntity(ActiveMatterRequest activeMatterRequest);
+//    ActiveMatter toEntity(ActiveMatterRequest activeMatterRequest);
+//
+////    ActiveMatterRequest toDto(ActiveMatter activeMatter);
+//
+//    ActiveMatter toEntity(ActiveMatterResponse activeMatterResponse);
 
-    ActiveMatterRequest toDto(ActiveMatter activeMatter);
+////    @Override
+//    ActiveMatterResponse toResponse(ActiveMatter activeMatter);
+//
+////    @Override
+//    List<ActiveMatterResponse> toResponse(List<ActiveMatter> entity);
+//
+//    ActiveMatterResponse toResponseFromEntity(ActiveMatter activeMatter);
+//
+////    @Override
+//    List<ActiveMatterResponse> toResponseFromEntity(List<ActiveMatter> entity);
 
-    ActiveMatter toEntity(ActiveMatterResponse activeMatterResponse);
 }

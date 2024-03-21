@@ -6,6 +6,7 @@ import com.audit.agriin.Domains.DTOs.Entities.Firm.FirmResponse;
 import com.audit.agriin.Domains.Entities.Business.Audit;
 import com.audit.agriin.Domains.Entities.Business.Firm;
 import com.audit.agriin.Domains.Entities.Business.Parcel;
+import com.audit.agriin.Domains.Entities.Common.FirmAssignment;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -22,24 +23,20 @@ import java.util.stream.Collectors;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         componentModel = MappingConstants.ComponentModel.SPRING
+
 )
 public interface FirmMapper extends _Mapper<UUID, FirmRequest, FirmResponse, Firm> {
-    Firm toEntity(FirmRequest firmRequest);
 
-    FirmRequest toDto(Firm firm);
+//    FirmRequest toDto(Firm firm);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Firm partialUpdate(FirmRequest firmRequest, @MappingTarget Firm firm);
 
-    Firm toEntity(FirmResponse firmResponse);
 
     @AfterMapping
     default void linkFirmAssignments(@MappingTarget Firm firm) {
         firm.getFirmAssignments().forEach(firmAssignment -> firmAssignment.setFirm(firm));
     }
-
-    @Mapping(target = "parcelNames", expression = "java(parcelsToParcelNames(firm.getParcels()))")
-    FirmResponse toDto1(Firm firm);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Firm partialUpdate(FirmResponse firmResponse, @MappingTarget Firm firm);
@@ -47,4 +44,30 @@ public interface FirmMapper extends _Mapper<UUID, FirmRequest, FirmResponse, Fir
     default List<String> parcelsToParcelNames(List<Parcel> parcels) {
         return parcels.stream().map(Parcel::getName).collect(Collectors.toList());
     }
+    @AfterMapping
+    default void linkParcels(@MappingTarget Firm firm) {
+        firm.getParcels().forEach(parcel -> parcel.setFirm(firm));
+    }
+
+    @AfterMapping
+    default void linkFirmAnalyses(@MappingTarget Firm firm) {
+        firm.getFirmAnalyses().forEach(firmAnalysis -> firmAnalysis.setFirm(firm));
+    }
+
+    @AfterMapping
+    default void linkFiles(@MappingTarget Firm firm) {
+        firm.getStorage().getFiles().forEach(file -> file.setFileOwner(firm.getStorage()));
+    }
+
+    default List<Boolean> firmAssignmentsToFirmAssignmentInDuties(List<FirmAssignment> firmAssignments) {
+        return firmAssignments.stream().map(FirmAssignment::isInDuty).collect(Collectors.toList());
+    }
+
+    Firm toEntity(FirmResponse firmResponse);
+
+    @Override
+    FirmResponse toResponse(Firm firm);
+
+    @Override
+    List<FirmResponse> toResponse(List<Firm> entity);
 }

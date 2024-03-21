@@ -17,17 +17,19 @@ import java.util.Map;
 @Component
 public class AuditReport extends _Report {
 
+    public static final String savePath = "src/main/java/com/audit/agriin/Reports/Templates/Audit/";
+
 
     @Override
     public void compile() throws JRException {
         if (getClass().getResource("AuditReport.jasper") != null)
             return;
         System.out.println("Compiling Audit Report");
-        InputStream employeeReportStream
-                = getClass().getResourceAsStream("/AuditReport.jrxml");
+        InputStream auditReportStream
+                = getClass().getResourceAsStream("/templates/AuditReport.jrxml");
         JasperReport jasperReport
-                = JasperCompileManager.compileReport(employeeReportStream);
-        JRSaver.saveObject(jasperReport, "AuditReport.jasper");
+                = JasperCompileManager.compileReport(auditReportStream);
+        JRSaver.saveObject(jasperReport, STR."\{savePath}AuditReport.jasper");
     }
 
     @Override
@@ -37,7 +39,7 @@ public class AuditReport extends _Report {
         Map<String, String> temp = new HashMap<>();
         compile();
         parameters.put("Created by", "NOUHI Sidati");
-        String file = "/AuditReport.jasper";
+        String file = "src/main/java/com/audit/agriin/Reports/Templates/Audit/AuditReport.jasper";
         System.out.println(STR."Current working directory : \{file}");
         JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(file);
         JasperPrint jasperPrint = JasperFillManager.fillReport(report, parameters, dataSource);
