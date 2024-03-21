@@ -1,20 +1,29 @@
 package com.audit.agriin.Domains.DTOs.Entities.AuditType;
 
-import com.audit.agriin.Domains.DTOs._Response;
-import com.audit.agriin.Domains.Entities.Business.Audit;
-import com.audit.agriin.Domains.Entities.Business.AuditChecklist;
+import com.audit.agriin.Domains.DTOs.AbstractResponse;
+import com.audit.agriin.Domains.DTOs.Entities.File.FileResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * DTO for {@link com.audit.agriin.Domains.Entities.Business.AuditType}
  */
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record AuditTypeResponse(Timestamp createdAt, Timestamp updatedAt, Long version, UUID id, String name,
-                                String description, AuditChecklist auditChecklist,
-                                List<Audit> audits) implements _Response {
+public class AuditTypeResponse extends AbstractResponse<UUID> {
+    String name;
+    String description;
+    String auditChecklistChecklistName;
+    List<FileResponse> auditChecklistStorageFiles;
 }

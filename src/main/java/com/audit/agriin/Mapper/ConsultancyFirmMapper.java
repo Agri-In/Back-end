@@ -5,6 +5,7 @@ import com.audit.agriin.Domains.DTOs.Entities.ConsultancyFirm.ConsultancyFirmRes
 import com.audit.agriin.Domains.Entities.Corporate.ConsultancyFirm;
 import org.mapstruct.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -14,19 +15,24 @@ import java.util.UUID;
 )
 public interface ConsultancyFirmMapper extends _Mapper<UUID, ConsultancyFirmRequest, ConsultancyFirmResponse, ConsultancyFirm> {
     ConsultancyFirm toEntity(ConsultancyFirmRequest consultancyFirmRequest);
+//
+//    ConsultancyFirmRequest toDto(ConsultancyFirm consultancyFirm);
 
-    ConsultancyFirmRequest toDto(ConsultancyFirm consultancyFirm);
-
-    @Mapping(source = "addressPostalCode", target = "address.postalCode")
-    @Mapping(source = "addressBuilding", target = "address.building")
-    @Mapping(source = "addressStreet", target = "address.street")
-    @Mapping(source = "addressCity", target = "address.city")
-    @Mapping(source = "addressDistrict", target = "address.district")
-    @Mapping(source = "addressRegion", target = "address.region")
+    @Mapping(source = "storageId", target = "storage.id")
     ConsultancyFirm toEntity(ConsultancyFirmResponse consultancyFirmResponse);
 
-    @InheritInverseConfiguration(name = "toEntity")
     @Override
+    @Mapping(source = "storage.id", target = "storageId")
     ConsultancyFirmResponse toResponse(ConsultancyFirm consultancyFirm);
+
+//    ConsultancyFirmResponse toResponseFromEntity(ConsultancyFirm consultancyFirm);
+//
+//    @Override
+//    List<ConsultancyFirmResponse> toResponseFromEntity(List<ConsultancyFirm> entity);
+//
+//    @Override
+//    List<ConsultancyFirmResponse> toResponse(List<ConsultancyFirm> entity);
+
+
 
 }

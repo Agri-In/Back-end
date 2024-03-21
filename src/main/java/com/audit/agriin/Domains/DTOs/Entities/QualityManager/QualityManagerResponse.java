@@ -14,7 +14,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -25,18 +24,35 @@ import java.util.UUID;
  * DTO for {@link com.audit.agriin.Domains.Entities.NonCorporate.QualityManager}
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record QualityManagerResponse(Timestamp createdAt, Timestamp updatedAt, Long version, UUID id,
-                                     List<ImageResponse> storageImages,
-                                     @Pattern(message = "Phone number must match the format '0XXXXXXXXX'", regexp = "0\\d{9}") String phoneNumber,
-                                     @Size(message = "Email is too long", max = 80) @Email(message = "Email was not provided") String email,
-                                     @NotNull(message = "FirstName must be present") @Size(message = "Firstname cannot be empty", min = 1) String firstname,
-                                     @Size(message = "Lastname is too long", max = 30) String lastname, Gender gender,
-                                     String nationality, UserStatus status, Date birthDate,
-                                     IdentityDocumentType identityDocumentType, String identityDocumentNumber,
-                                     String addressRegion, String addressDistrict, String addressCity,
-                                     String addressStreet, Integer addressBuilding, Integer addressPostalCode,
-                                     Set<GroupResponse> userGroups, boolean enabled, int failedLoginAttempts,
-                                     boolean loginDisabled, boolean accountNonLocked,
-                                     List<AccountManagerResponse> accountManagers,
-                                     ManagedCompanyResponse managedCompany) implements _Response {
+@lombok.Data
+public class QualityManagerResponse implements _Response {
+
+    private Timestamp createdAt;
+    private Timestamp updatedAt;
+    private Long version;
+    private UUID id;
+    private List<ImageResponse> storageImages;
+    @Pattern(message = "Phone number must match the format '0XXXXXXXXX'", regexp = "0\\d{9}")
+    private String phoneNumber;
+    @Size(message = "Email is too long", max = 80) @Email(message = "Email was not provided")
+    private String email;
+    @NotNull(message = "FirstName must be present") @Size(message = "Firstname cannot be empty", min = 1)
+    private String firstname;
+    @Size(message = "Lastname is too long", max = 30)
+    private String lastname;
+    private Gender gender;
+    private String nationality;
+    private UserStatus status;
+    private Date birthDate;
+    private IdentityDocumentType identityDocumentType;
+    private String identityDocumentNumber;
+    private String addressRegion;
+    private String addressDistrict;
+    private String addressCity;
+    private String addressStreet;
+    private Integer addressBuilding;
+    private Integer addressPostalCode;
+    private Set<GroupResponse> userGroups;
+    private List<AccountManagerResponse> accountManagers;
+    private ManagedCompanyResponse managedCompany;
 }

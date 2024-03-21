@@ -7,10 +7,18 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
 
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "files")
 public class File extends AbstractEntity<UUID> {
 

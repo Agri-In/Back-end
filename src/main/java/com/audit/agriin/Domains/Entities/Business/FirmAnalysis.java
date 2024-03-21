@@ -10,10 +10,18 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Getter
 @Setter
+@Entity
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public class FirmAnalysis extends AbstractEntity<UUID> {
 
     @Column(name = "analysis_name", nullable = false)

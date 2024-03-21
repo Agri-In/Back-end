@@ -1,5 +1,7 @@
 package com.audit.agriin.Services.Implemetation;
 
+import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditRequest;
+import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditResponse;
 import com.audit.agriin.Domains.Entities.Business.Audit;
 import com.audit.agriin.Domains.Entities.Business.AuditType;
 import com.audit.agriin.Domains.Entities.Business.Firm;
@@ -28,14 +30,14 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuditServiceImp extends _ServiceImp<UUID, AuditRequestt, AuditResponsee, Audit, AuditRepository, AuditMapper> implements AuditService {
+public class AuditServiceImp extends _ServiceImp<UUID, AuditRequest, AuditResponse, Audit, AuditRepository, AuditMapper> implements AuditService {
     private final FirmRepository firmRepository;
     private final AuditTypeRepository auditTypeRepository;
 
     @Override
-    public Optional<AuditResponsee> create(AuditRequestt request) {
-        List<Firm> firms = firmRepository.findAllById(request.getFirmsIds());
-        AuditType auditType = auditTypeRepository.findById(request.getAuditTypeId()).orElseThrow(() -> new ResourceNotCreatedException("No audit type found with the given id"));
+    public Optional<AuditResponse> create(AuditRequest request) {
+        List<Firm> firms = firmRepository.findAllById(request.firmIds());
+        AuditType auditType = auditTypeRepository.findById(request.auditTypeId()).orElseThrow(() -> new ResourceNotCreatedException("No audit type found with the given id"));
         if (firms.isEmpty()) {
             throw new ResourceNotCreatedException("No firms found with the given ids");
         }
@@ -64,6 +66,7 @@ public class AuditServiceImp extends _ServiceImp<UUID, AuditRequestt, AuditRespo
         AuditReport report = new AuditReport();
         report.compile();
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(audits);
+        System.out.println("jasper file created");
         report.export(type, dataSource);
     }
 }

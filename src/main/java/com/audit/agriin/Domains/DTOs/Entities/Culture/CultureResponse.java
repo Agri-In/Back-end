@@ -1,17 +1,27 @@
 package com.audit.agriin.Domains.DTOs.Entities.Culture;
 
+import com.audit.agriin.Domains.DTOs.AbstractResponse;
 import com.audit.agriin.Domains.DTOs.Entities.Parcel.ParcelResponse;
-import com.audit.agriin.Domains.DTOs._Response;
-import com.audit.agriin.Domains.Entities.Business.Variety;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.sql.Timestamp;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Value;
+import lombok.experimental.SuperBuilder;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * DTO for {@link com.audit.agriin.Domains.Entities.Business.Culture}
  */
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record CultureResponse(Timestamp createdAt, Timestamp updatedAt, Long version, UUID id, String name,
-                              String description, Variety variety, List<ParcelResponse> parcels) implements _Response {
+public class CultureResponse extends AbstractResponse<UUID> {
+    String name;
+    String description;
+    List<ParcelResponse> parcels;
+
 }

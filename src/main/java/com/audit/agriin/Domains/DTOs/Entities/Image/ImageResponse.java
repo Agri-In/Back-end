@@ -1,15 +1,27 @@
 package com.audit.agriin.Domains.DTOs.Entities.Image;
 
-import com.audit.agriin.Domains.DTOs._Response;
+import com.audit.agriin.Domains.DTOs.AbstractResponse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.validator.constraints.URL;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.UUID;
 
 /**
  * DTO for {@link com.audit.agriin.Domains.Entities.Common.Image}
  */
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record ImageResponse(Timestamp createdAt, String name, String type, @URL String url) implements _Response {
+public class ImageResponse extends AbstractResponse<UUID> {
+    String name;
+    String type;
+    @URL
+    String url;
+    UUID storageId;
 }

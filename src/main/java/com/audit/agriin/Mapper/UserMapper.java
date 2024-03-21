@@ -3,11 +3,9 @@ package com.audit.agriin.Mapper;
 import com.audit.agriin.Domains.DTOs.Entities.User.UserRequest;
 import com.audit.agriin.Domains.DTOs.Entities.User.UserResponses;
 import com.audit.agriin.Domains.Entities.NonCorporate.User;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,4 +18,25 @@ import java.util.UUID;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface UserMapper extends _Mapper<UUID, UserRequest, UserResponses, User> {
+
+//    @IterableMapping(qualifiedByName = "toResponse")
+//    @Override
+//    List<UserResponses> toResponse(List<User> user);
+
+//    @IterableMapping(qualifiedByName = "toResponseFromEntity")
+//    @Override
+//    List<UserResponses> toResponseFromEntity(List<User> entity);
+//
+//    @Override
+//    UserResponses toResponseFromEntity(User entity);
+
+//    User toEntity(UserRequest userRequest);
+//
+//    User toEntity(UserResponses userResponses);
+//
+//    @Override
+//    UserResponses toResponse(User user);
+//
+//    @IterableMapping(qualifiedByName = "toEntity")
+//    List<User> toEntity(List<UserRequest> userRequest);
 }

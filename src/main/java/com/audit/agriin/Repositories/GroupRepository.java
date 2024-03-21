@@ -1,11 +1,16 @@
 package com.audit.agriin.Repositories;
 
 import com.audit.agriin.Domains.Entities.NonCorporate.Group;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface GroupRepository extends JpaRepository<Group, Long>, JpaSpecificationExecutor<Group> {
+import java.util.Optional;
+import java.util.UUID;
+
+public interface GroupRepository extends JpaRepository<Group, UUID> {
     Group findGroupByName(String name);
-    Group findGroupById(Long id);
+    @NotNull
+    Optional<Group> findById(@NotNull UUID id);
     Group findGroupByCode(String code);
 }

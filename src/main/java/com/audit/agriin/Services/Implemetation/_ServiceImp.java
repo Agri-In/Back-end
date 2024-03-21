@@ -178,7 +178,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
      */
     @Transactional
     @CacheEvict(
-            key = "#response.id",
+//            key = "#response.id",
             allEntries = true
     )
     public Boolean delete(@Valid Res response) {

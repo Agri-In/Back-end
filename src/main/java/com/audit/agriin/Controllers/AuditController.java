@@ -1,5 +1,7 @@
 package com.audit.agriin.Controllers;
 
+import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditRequest;
+import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditResponse;
 import com.audit.agriin.Domains.Entities.Business.Audit;
 import com.audit.agriin.Services.Implemetation.AuditServiceImp;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/audit")
-public class AuditController extends _Controller<UUID, AuditRequestt, AuditResponsee, AuditServiceImp> {
+public class AuditController extends _Controller<UUID, AuditRequest, AuditResponse, AuditServiceImp> {
     private final AuditServiceImp auditService;
 
 
@@ -37,7 +39,6 @@ public class AuditController extends _Controller<UUID, AuditRequestt, AuditRespo
         try {
             auditService.generateReport(type);
             return ResponseEntity.ok().build();
-
         } catch (SQLException | ParseException | JRException e) {
             log.error(e.getMessage());
             return ResponseEntity.internalServerError().build();

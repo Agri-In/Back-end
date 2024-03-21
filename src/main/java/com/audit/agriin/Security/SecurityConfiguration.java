@@ -55,6 +55,7 @@ public class SecurityConfiguration {
             "/api/v1/audit/",
             "/api/v1/audit",
             "/api/v1/audit/**",
+            "/api/v1/audit/reports/**",
             "/api/v1/audit/create"
     );
     private static final List<String> ALLOW_ORIGIN = List.of(

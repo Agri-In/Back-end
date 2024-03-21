@@ -8,6 +8,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -16,9 +17,20 @@ import java.util.UUID;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface GroupMapper extends _Mapper<UUID, GroupRequest, GroupResponse, Group> {
-    Group toEntity(GroupRequest groupRequest);
+//    Group toEntity(GroupRequest groupRequest);
 
-    GroupRequest toDto(Group group);
+//    GroupRequest toDto(Group group);
 
-    Group toEntity(GroupResponse groupResponse);
+//    Group toEntity(GroupResponse groupResponse);
+//
+//    @Override
+//    GroupResponse toResponse(Group group);
+//
+//    @Override
+//    List<GroupResponse> toResponse(List<Group> entity);
+//
+//    GroupResponse toResponseFromEntity(Group group);
+//
+//    @Override
+//    List<GroupResponse> toResponseFromEntity(List<Group> entity);
 }

@@ -14,7 +14,6 @@ import java.util.UUID;
  * DTO for {@link com.audit.agriin.Domains.Entities.Business.FirmAnalysis}
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record FirmAnalysisRequest(String name, String description, LocalDate date, Timestamp storageCreatedAt,
-                                  Timestamp storageUpdatedAt, Long storageVersion, UUID storageId,
+public record FirmAnalysisRequest(String name, String description, LocalDate date, UUID storageId,
                                   List<FileRequest> storageFiles, UUID firmId) implements _Request {
 }
