@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface AuditService extends _Service<AuditRequest, AuditResponse, UUID>{
     /**
-     * Retrieves a competition by its unique identifier.
+     * Retrieves a audit by its unique identifier.
      *
      * @param id The unique identifier of the competition.
      * @return An optional containing the competition, or empty if not found.

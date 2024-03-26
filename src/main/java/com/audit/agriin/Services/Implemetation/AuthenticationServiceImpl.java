@@ -34,7 +34,7 @@ import java.util.Set;
  * Implementation of the Service class {@link AuthenticationService} for user authentication and token management.
  * This service provides methods to register a new user, authenticate a user, and refresh access tokens.
  *
- * @author <a href="mailto:ouharrioutman@gmail.com">ouharri outman</a>
+ * @author <a href="mailto:sidatnouhi@gmail.com">Nouhi Sidati</a>
  */
 @Slf4j
 @Service
@@ -68,7 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * providing them with the necessary tokens to access secured endpoints.
      *
      * @param request The registration request containing the new user's details such as name, email, and password.
-     * @param group    The role to be assigned to the new user, which determines the user's permissions and access.
+     * @param group   The role to be assigned to the new user, which determines the user's permissions and access.
      * @return AuthenticationResponse containing the generated JWT access and refresh tokens.
      */
     @Transactional
@@ -83,7 +83,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .enabled(true)
                 .accountNonLocked(true)
                 .password(passwordEncoder.encode(request.password()))
-                .failedLoginAttempts(0).loginDisabled(false).build();
+                .failedLoginAttempts(0)
+                .loginDisabled(false)
+                .build();
 
         user.setUserGroups(Set.of(group));
 

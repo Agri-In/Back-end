@@ -10,6 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface ParcelRepository extends JpaRepository<Parcel, UUID> {
-    Optional<Parcel> findParcelByName(Parcel parcel);
+    Optional<Parcel> findParcelByName(String name);
     Optional<Parcel> findParcelsByCulture(Culture culture);
 }
