@@ -4,12 +4,14 @@ import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditRequest;
 import com.audit.agriin.Domains.DTOs.Entities.Audit.AuditResponse;
 import com.audit.agriin.Domains.Entities.Business.Audit;
 import com.audit.agriin.Domains.Entities.Business.AuditType;
+import com.audit.agriin.Domains.Entities.Business.FileOwner;
 import com.audit.agriin.Domains.Entities.Business.Firm;
 import com.audit.agriin.Exceptions.ResourceNotCreatedException;
 import com.audit.agriin.Mapper.AuditMapper;
 import com.audit.agriin.Reports.Templates.Audit.AuditReport;
 import com.audit.agriin.Repositories.AuditRepository;
 import com.audit.agriin.Repositories.AuditTypeRepository;
+import com.audit.agriin.Repositories.FileStorageRepository;
 import com.audit.agriin.Repositories.FirmRepository;
 import com.audit.agriin.Services.Specification.AuditService;
 import lombok.RequiredArgsConstructor;
@@ -33,9 +35,11 @@ import java.util.UUID;
 public class AuditServiceImp extends _ServiceImp<UUID, AuditRequest, AuditResponse, Audit, AuditRepository, AuditMapper> implements AuditService {
     private final FirmRepository firmRepository;
     private final AuditTypeRepository auditTypeRepository;
+    private final FileStorageRepository storageRepository;
 
     @Override
     public Optional<AuditResponse> create(AuditRequest request) {
+
         List<Firm> firms = firmRepository.findAllById(request.firmIds());
         AuditType auditType = auditTypeRepository.findById(request.auditTypeId()).orElseThrow(() -> new ResourceNotCreatedException("No audit type found with the given id"));
         if (firms.isEmpty()) {
@@ -44,10 +48,13 @@ public class AuditServiceImp extends _ServiceImp<UUID, AuditRequest, AuditRespon
         Audit entityToCreate = mapper.toEntityFromRequest(request);
         entityToCreate.setFirms(firms);
         entityToCreate.setAuditType(auditType);
-//        throw new ResourceNotCreatedException(entityToCreate.toString());
+
         try {
             assert repository != null;
             Audit createdEntity = repository.saveAndFlush(entityToCreate);
+            FileOwner storage  = new FileOwner();
+            storage.setAudit(createdEntity);
+            storageRepository.saveAndFlush(storage);
             return Optional.of(mapper.toResponse(createdEntity));
         } catch (Exception e) {
             log.error("Error while creating entity", e);

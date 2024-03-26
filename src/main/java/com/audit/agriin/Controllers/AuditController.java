@@ -31,13 +31,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/audit")
 public class AuditController extends _Controller<UUID, AuditRequest, AuditResponse, AuditServiceImp> {
-    private final AuditServiceImp auditService;
 
 
     @GetMapping("/reports/{type}")
     public ResponseEntity<Audit> generateReport(@PathVariable String type) {
         try {
-            auditService.generateReport(type);
+            service.generateReport(type);
             return ResponseEntity.ok().build();
         } catch (SQLException | ParseException | JRException e) {
             log.error(e.getMessage());

@@ -32,13 +32,14 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
  * @author <a href="mailto:sidatnouhi@gmail.com">NOUHI Sidati</a>
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
     private static final List<String> WHITE_LIST_URL = List.of(
             "/api/v1/**",
+            "/api/v1/auth/**",
             "/api/v1/auth/register",
             "/api/v1/Oauth/**",
             "/v2/api-docs",
@@ -52,15 +53,32 @@ public class SecurityConfiguration {
             "/webjars/**",
             "/swagger-ui.html",
             "/actuator/**",
-            "/api/v1/audit/",
-            "/api/v1/audit",
             "/api/v1/audit/**",
+            "/api/v1/auditType/**",
             "/api/v1/audit/reports/**",
-            "/api/v1/audit/create"
+            "/api/v1/audit/create",
+            "/api/v1/auditType/create"
     );
+
+    private final List<String> ADMIN_PERMITTED_URL = List.of(
+            "/api/v1/admin/**",
+            "/api/v1/permissions/**"
+    );
+
+    private final List<String> QUALITY_MANAGER_PERMITTED_URL = List.of(
+            "/api/v1/manager/**",
+            "/api/v1/permissions/**"
+    );
+
+    private final List<String> ACCOUNT_MANAGER_PERMITTED_URL = List.of(
+            "/api/v1/am/**"
+    );
+
+    private final List<String> DEFAULT_USER_PERMITTED_URL = List.of(
+            "/api/v1/request_access/**"
+    );
+
     private static final List<String> ALLOW_ORIGIN = List.of(
-//            "http://localhost:4200",
-//            "https://e044-197-230-250-154.ngrok-free.app"
             "*"
     );
     private static final List<String> ALLOW_METHODS = List.of(
@@ -68,7 +86,8 @@ public class SecurityConfiguration {
             "POST",
             "PUT",
             "DELETE",
-            "OPTIONS"
+            "OPTIONS",
+            "PATCH"
     );
     private static final List<String> ALLOW_HEAD = List.of(
             "Access-Control-Allow-Origin",
@@ -133,8 +152,16 @@ public class SecurityConfiguration {
                         )
                 )
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers(createWhiteListMatchers())
+                        req.requestMatchers(createMatchers(WHITE_LIST_URL))
                                 .permitAll()
+                                .requestMatchers(createMatchers(ADMIN_PERMITTED_URL))
+                                .hasAuthority("ADMIN")
+                                .requestMatchers(createMatchers(QUALITY_MANAGER_PERMITTED_URL))
+                                .hasAuthority("QUALITY_MANAGER")
+                                .requestMatchers(createMatchers(ACCOUNT_MANAGER_PERMITTED_URL))
+                                .hasAuthority("ACCOUNT_MANAGER")
+                                .requestMatchers(createMatchers(DEFAULT_USER_PERMITTED_URL))
+                                .hasAuthority("DEFAULT_USER")
                                 .anyRequest()
                                 .authenticated()
                 )
@@ -196,8 +223,8 @@ public class SecurityConfiguration {
      *
      * @return An array of AntPathRequestMatcher objects.
      */
-    private AntPathRequestMatcher[] createWhiteListMatchers() {
-        return WHITE_LIST_URL.stream()
+    private AntPathRequestMatcher[] createMatchers(List<String> list) {
+        return list.stream()
                 .map(AntPathRequestMatcher::new)
                 .toArray(AntPathRequestMatcher[]::new);
     }

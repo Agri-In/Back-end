@@ -1,4 +1,3 @@
-name: agriin
 services:
   agriin:
     image: 'postgres:latest'
@@ -63,7 +62,6 @@ networks:
     ipam:
       config:
         - subnet: 2001:0DB8::/112
-
 
 volumes:
   postgres-db:

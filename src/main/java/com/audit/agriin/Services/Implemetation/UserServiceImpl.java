@@ -122,6 +122,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @return A paginated list of the group users.
      */
 //    @Cacheable("managers")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Page<UserResponses> getAllByGroup(Group group, Pageable pageable) {
         return repository.findAllByUserGroupsContaining(group , pageable)
                 .map(mapper::toResponse);
@@ -134,6 +135,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @param email The email of the user to retrieve.
      * @return Optional containing the user if found, otherwise empty.
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     public User findByEmail(String email) {
         return repository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -145,11 +147,13 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @param username The ID of the user to retrieve.
      * @return Optional containing the user if found, otherwise empty.
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Optional<User> findById(UUID username) {
         return repository.findById(username);
     }
 
     @Override
+    @PreAuthorize("hasAuthority('ADMIN')")
     public UserResponses changeGroup(ChangeGroupRequest changeGroupRequest) {
         return null;
     }
@@ -196,6 +200,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @param pageable The pagination information.
      * @return A paginated list of connected users.
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Page<UserResponses> findConnectedUsers(Pageable pageable) {
         return repository.findAllByStatus(UserStatus.ONLINE, pageable)
                 .map(mapper::toResponse);
@@ -224,6 +229,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      *
      * @param user User for whom tokens are revoked
      */
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void revokeAllUserTokens(User user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (!validUserTokens.isEmpty()) {

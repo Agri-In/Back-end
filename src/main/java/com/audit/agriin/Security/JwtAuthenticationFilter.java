@@ -1,5 +1,6 @@
 package com.audit.agriin.Security;
 
+import com.audit.agriin.Services.Implemetation.CustomUserDetailService;
 import com.audit.agriin.Services.Specification.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -20,14 +21,14 @@ import java.io.IOException;
 /**
  * Custom JWT authentication filter to process and validate JWT tokens in the incoming requests.
  *
- * @author <a href="mailto:ouharri.outman@gmail.com">Outman Ouharri</a>
+ * @author <a href="mailto:sidatinouhi@gmail.com">Nouhi Sidati</a>
  */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService service;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailService userDetailsService;
 
     /**
      * Filters incoming requests to check for a valid JWT token and authenticate the user if necessary.

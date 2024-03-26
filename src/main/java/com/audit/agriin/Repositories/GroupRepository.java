@@ -12,5 +12,5 @@ public interface GroupRepository extends JpaRepository<Group, UUID> {
     Group findGroupByName(String name);
     @NotNull
     Optional<Group> findById(@NotNull UUID id);
-    Group findGroupByCode(String code);
+    Optional<Group> findGroupByCode(String code);
 }
