@@ -32,7 +32,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
  * @author <a href="mailto:sidatnouhi@gmail.com">NOUHI Sidati</a>
  */
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
@@ -41,6 +41,7 @@ public class SecurityConfiguration {
             "/api/v1/**",
             "/api/v1/auth/**",
             "/api/v1/auth/register",
+            "/api/v1/auth/authenticate",
             "/api/v1/Oauth/**",
             "/v2/api-docs",
             "/v3/api-docs",

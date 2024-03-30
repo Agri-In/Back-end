@@ -17,7 +17,7 @@ import java.util.Set;
 @Setter
 @Entity
 @SuperBuilder
-@Table(name = "audit_firm")
+@Table(name = "auditing_firm")
 @Inheritance(strategy = InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "corporationId")
 @NoArgsConstructor

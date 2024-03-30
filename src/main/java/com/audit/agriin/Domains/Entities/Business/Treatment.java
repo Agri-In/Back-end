@@ -10,9 +10,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,7 +32,7 @@ import lombok.experimental.SuperBuilder;
 public class Treatment extends AbstractEntity<UUID> {
 
     @OneToMany
-    private List<Parcel> parcels = new ArrayList<>();
+    private Set<Parcel> parcels = new HashSet<>();
 
     @ManyToOne
     private Drug drug;

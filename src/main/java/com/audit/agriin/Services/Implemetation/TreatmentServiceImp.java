@@ -1,12 +1,13 @@
 package com.audit.agriin.Services.Implemetation;
 
+import com.audit.agriin.Domains.DTOs.Entities.Drug.DrugRequest;
+import com.audit.agriin.Domains.DTOs.Entities.Drug.DrugResponse;
 import com.audit.agriin.Domains.DTOs.Entities.Treatment.TreatmentRequest;
 import com.audit.agriin.Domains.DTOs.Entities.Treatment.TreatmentResponse;
-import com.audit.agriin.Domains.Entities.Business.Drug;
-import com.audit.agriin.Domains.Entities.Business.Operator;
-import com.audit.agriin.Domains.Entities.Business.Treatment;
+import com.audit.agriin.Domains.Entities.Business.*;
 import com.audit.agriin.Domains.Enums.DrugApplicationStage;
 import com.audit.agriin.Mapper.TreatmentMapper;
+import com.audit.agriin.Repositories.ParcelRepository;
 import com.audit.agriin.Repositories.TreatmentRepository;
 import com.audit.agriin.Services.Specification.TreatmentService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TreatmentServiceImp extends _ServiceImp<UUID, TreatmentRequest, TreatmentResponse, Treatment, TreatmentRepository, TreatmentMapper> implements TreatmentService {
+
+    private final ParcelRepository parcelRepository;
 
     /**
      * @param applicationDate
@@ -75,5 +79,13 @@ public class TreatmentServiceImp extends _ServiceImp<UUID, TreatmentRequest, Tre
         return repository.findTreatmentsByOperator(operator).map(
                 treatments -> mapper.toResponse(treatments)
         );
+    }
+
+    @Override
+    public Optional<TreatmentResponse> create(TreatmentRequest request) {
+        List<Parcel> parcels = parcelRepository.findAllById(request.parcelIds());
+        Treatment treatment = mapper.toEntityFromRequest(request);
+        treatment.setParcels(Set.copyOf(parcels));
+        return Optional.ofNullable(mapper.toResponse(repository.save(treatment)));
     }
 }

@@ -10,6 +10,9 @@ import lombok.Value;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -23,6 +26,6 @@ import java.util.UUID;
 public class LMRResponse extends AbstractResponse<UUID> {
     Region region;
     String residue_mg_kg;
-    UUID activeMatterId;
-    String activeMatterName;
+    UUID drugId;
+    String drugName;
 }

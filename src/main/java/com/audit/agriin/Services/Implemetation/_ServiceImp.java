@@ -3,6 +3,7 @@ package com.audit.agriin.Services.Implemetation;
 import com.audit.agriin.Domains.DTOs.App.RestPage;
 import com.audit.agriin.Domains.DTOs._Request;
 import com.audit.agriin.Domains.DTOs._Response;
+import com.audit.agriin.Domains.Entities.Business.Operator;
 import com.audit.agriin.Domains.Entities.Common._Entity;
 import com.audit.agriin.Exceptions.ResourceNotCreatedException;
 import com.audit.agriin.Mapper._Mapper;
@@ -20,6 +21,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Generic service implementation with common CRUD operations.

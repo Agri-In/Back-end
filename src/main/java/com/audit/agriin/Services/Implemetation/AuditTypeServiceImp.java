@@ -45,7 +45,7 @@ public class AuditTypeServiceImp extends _ServiceImp<UUID, AuditTypeRequest, Aud
         AuditType entityToCreate = mapper.toEntityFromRequest(request);
         try {
             assert repository != null;
-            AuditType createdEntity = repository.saveAndFlush(entityToCreate);
+            AuditType createdEntity = repository.save(entityToCreate);
             return Optional.of(mapper.toResponse(createdEntity));
         } catch (Exception e) {
             log.error("Error while creating entity", e);

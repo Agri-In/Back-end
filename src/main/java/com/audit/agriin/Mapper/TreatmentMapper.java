@@ -14,10 +14,11 @@ import java.util.stream.Collectors;
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         componentModel = MappingConstants.ComponentModel.SPRING
-        )
+)
 public interface TreatmentMapper extends _Mapper<UUID, TreatmentRequest, TreatmentResponse, Treatment> {
     @Mapping(source = "operatorId", target = "operator.id")
     @Mapping(source = "drugId", target = "drug.id")
+//    @Mapping(source = "parcelIds", target = "parcels.id")
     Treatment toEntity(TreatmentRequest treatmentRequest);
 
     default List<UUID> parcelsToParcelIds(List<Parcel> parcels) {
@@ -30,7 +31,7 @@ public interface TreatmentMapper extends _Mapper<UUID, TreatmentRequest, Treatme
     @Mapping(source = "drugId", target = "drug.id")
     Treatment toEntity(TreatmentResponse treatmentResponse);
 
-//    @InheritInverseConfiguration(name = "toEntity")
+    //    @InheritInverseConfiguration(name = "toEntity")
 //    @Override
 //    TreatmentResponse toResponse(Treatment treatment);
 //
@@ -42,6 +43,10 @@ public interface TreatmentMapper extends _Mapper<UUID, TreatmentRequest, Treatme
 //    @Override
 //    List<TreatmentResponse> toResponseFromEntity(List<Treatment> entity);
 //
-//    List<Treatment> toEntity(List<TreatmentRequest> entity);
+    @Override
+    @Mapping(source = "operatorId", target = "operator.id")
+    @Mapping(source = "drugId", target = "drug.id")
+//    @Mapping(source = "parcelIds", target = "parcels.id")
+    Treatment toEntityFromRequest(TreatmentRequest treatmentRequest);
 
 }

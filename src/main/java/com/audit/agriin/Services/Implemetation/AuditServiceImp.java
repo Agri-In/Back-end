@@ -6,6 +6,7 @@ import com.audit.agriin.Domains.Entities.Business.Audit;
 import com.audit.agriin.Domains.Entities.Business.AuditType;
 import com.audit.agriin.Domains.Entities.Business.FileOwner;
 import com.audit.agriin.Domains.Entities.Business.Firm;
+import com.audit.agriin.Domains.Enums.AuditStatus;
 import com.audit.agriin.Exceptions.ResourceNotCreatedException;
 import com.audit.agriin.Mapper.AuditMapper;
 import com.audit.agriin.Reports.Templates.Audit.AuditReport;
@@ -51,10 +52,12 @@ public class AuditServiceImp extends _ServiceImp<UUID, AuditRequest, AuditRespon
 
         try {
             assert repository != null;
-            Audit createdEntity = repository.saveAndFlush(entityToCreate);
             FileOwner storage  = new FileOwner();
-            storage.setAudit(createdEntity);
-            storageRepository.saveAndFlush(storage);
+            FileOwner createdStorage = storageRepository.save(storage);
+            entityToCreate.setStorage(createdStorage);
+            entityToCreate.setStatus(AuditStatus.PENDING);
+            Audit createdEntity = repository.save(entityToCreate);
+
             return Optional.of(mapper.toResponse(createdEntity));
         } catch (Exception e) {
             log.error("Error while creating entity", e);
