@@ -8,6 +8,7 @@ import com.audit.agriin.Repositories.FirmRepository;
 import com.audit.agriin.Services.Specification.FirmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("firms")
 public class FirmServiceImp extends _ServiceImp<UUID, FirmRequest, FirmResponse, Firm, FirmRepository, FirmMapper> implements FirmService {
     /**
      * @param name

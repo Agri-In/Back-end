@@ -12,7 +12,11 @@ import com.audit.agriin.Repositories.ParcelRepository;
 import com.audit.agriin.Services.Specification.ParcelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -20,6 +24,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("parcels")
 public class ParcelServiceImp extends _ServiceImp<UUID, ParcelRequest, ParcelResponse, Parcel, ParcelRepository, ParcelMapper> implements ParcelService {
     private final FirmRepository firmRepository;
 
@@ -33,6 +38,16 @@ public class ParcelServiceImp extends _ServiceImp<UUID, ParcelRequest, ParcelRes
     }
 
     @Override
+    @Caching(
+            evict = {
+                    @CacheEvict(
+                            key = "#result.get()",
+                            allEntries = true,
+                            condition = "#result.get() != null"
+                    )
+            }
+    )
+    @Transactional
     public Optional<ParcelResponse> create(ParcelRequest request) {
         Optional<Firm> firm = Optional.ofNullable(firmRepository.findById(request.firmId()).orElseThrow(() -> new ResourceNotFoundException("firm with id not found")));
         Parcel parcel = mapper.toEntityFromRequest(request);

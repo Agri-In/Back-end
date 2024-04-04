@@ -28,7 +28,7 @@ public interface TreatmentMapper extends _Mapper<UUID, TreatmentRequest, Treatme
     @Mapping(source = "operatorPhone", target = "operator.phone")
     @Mapping(source = "operatorFullName", target = "operator.fullName")
     @Mapping(source = "drugCommercialName", target = "drug.commercialName")
-    @Mapping(source = "drugId", target = "drug.id")
+//    @Mapping(source = "drug", target = "drug.id")
     Treatment toEntity(TreatmentResponse treatmentResponse);
 
     //    @InheritInverseConfiguration(name = "toEntity")
@@ -38,7 +38,8 @@ public interface TreatmentMapper extends _Mapper<UUID, TreatmentRequest, Treatme
 //    @Override
 //    List<TreatmentResponse> toResponse(List<Treatment> entity);
 //
-//    TreatmentResponse toResponseFromEntity(Treatment treatment);
+//    @Mapping(source = "operator.id", target = "operator")
+    TreatmentResponse toResponse(Treatment treatment);
 //
 //    @Override
 //    List<TreatmentResponse> toResponseFromEntity(List<Treatment> entity);
@@ -46,7 +47,6 @@ public interface TreatmentMapper extends _Mapper<UUID, TreatmentRequest, Treatme
     @Override
     @Mapping(source = "operatorId", target = "operator.id")
     @Mapping(source = "drugId", target = "drug.id")
-//    @Mapping(source = "parcelIds", target = "parcels.id")
     Treatment toEntityFromRequest(TreatmentRequest treatmentRequest);
 
 }

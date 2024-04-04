@@ -8,6 +8,7 @@ import com.audit.agriin.Repositories.GroupRepository;
 import com.audit.agriin.Services.Specification.GroupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("groups")
 public class GroupServiceImp extends _ServiceImp<UUID, GroupRequest, GroupResponse, Group, GroupRepository, GroupMapper> implements GroupService {
     /**
      * @param code 

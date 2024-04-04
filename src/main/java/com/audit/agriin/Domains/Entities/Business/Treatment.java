@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jdk.jfr.Description;
 import lombok.*;
 
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
@@ -29,6 +30,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "treatments")
 public class Treatment extends AbstractEntity<UUID> {
 
     @OneToMany
@@ -39,18 +41,20 @@ public class Treatment extends AbstractEntity<UUID> {
 
     @Column(name = "application_date")
     @Temporal(TemporalType.DATE)
-    private LocalDate applicationDate;
+    private Date applicationDate;
 
     @Column(name = "application_start_time")
     @Temporal(TemporalType.TIME)
-    private LocalTime applicationStartTime;
+    private Time applicationStartTime;
 
     @Column(name = "application_end_time")
     @Temporal(TemporalType.TIME)
-    private LocalTime applicationEndTime;
+    private Time applicationEndTime;
 
 
+    @Column(name = "quantity_in_kg_per_hectare")
     @Description("The drug quantity in Kg over a hectare")
+    @Transient
     private double quantity;
 
     @Enumerated(EnumType.STRING)
@@ -58,12 +62,15 @@ public class Treatment extends AbstractEntity<UUID> {
 
 
     @Column(name = "bouillie")
+    @Description("The quantity of bouillie in liters")
+    @Transient
     private double bouillie;
 
     @Column(name = "total_quantity")
     private double totalQuantity;
 
     @Column(name = "concentration")
+    @Transient
     @Description("The concentration of the drug in the bouillie")
     private double concentration;
 
@@ -83,10 +90,18 @@ public class Treatment extends AbstractEntity<UUID> {
     @Column(name = "materials", columnDefinition = "TEXT")
     private String materials;
 
-    public void setQuantity(double quantity) {
-            this.quantity = quantity;
-            calculateBouillie();
-            calculateConcentration();
+//    public void setTotalQuantity(double totalQuantity) {
+//            this.totalQuantity = totalQuantity;
+//            calculateQuantity();
+//            calculateBouillie();
+//            calculateConcentration();
+//    }
+
+    public double getTotalQuantity() {
+        calculateQuantity();
+        calculateBouillie();
+        calculateConcentration();
+        return this.totalQuantity;
     }
 
     @PostLoad

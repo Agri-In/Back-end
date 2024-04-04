@@ -19,7 +19,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -33,12 +37,23 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("audits")
 public class AuditServiceImp extends _ServiceImp<UUID, AuditRequest, AuditResponse, Audit, AuditRepository, AuditMapper> implements AuditService {
     private final FirmRepository firmRepository;
     private final AuditTypeRepository auditTypeRepository;
     private final FileStorageRepository storageRepository;
 
     @Override
+    @Caching(
+            evict = {
+                    @CacheEvict(
+                            key = "#result.get()",
+                            allEntries = true,
+                            condition = "#result.get() != null"
+                    )
+            }
+    )
+    @Transactional
     public Optional<AuditResponse> create(AuditRequest request) {
 
         List<Firm> firms = firmRepository.findAllById(request.firmIds());

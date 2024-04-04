@@ -11,7 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,9 +26,20 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("operators")
 public class OperatorServiceImp extends _ServiceImp<UUID, OperatorRequest, OperatorResponse, Operator, OperatorRepository, OperatorMapper> implements OperatorService {
 
     @Override
+    @Caching(
+            evict = {
+                    @CacheEvict(
+                            key = "#result.get()",
+                            allEntries = true,
+                            condition = "#result.get() != null"
+                    )
+            }
+    )
+    @Transactional
     public Optional<OperatorResponse> create(OperatorRequest request) {
         Operator entityToCreate = mapper.toEntityFromRequest(request);
         try {

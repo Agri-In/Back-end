@@ -68,10 +68,24 @@ public class CacheConfiguration {
                 );
     }
 
+//    @Bean
+//    public KeyGenerator customKeyGenerator() {
+//        return (target, method, params) -> {
+//            StringBuilder key = new StringBuilder();
+//            key.append(method.getName());
+//            for (Object param : params) {
+//                key.append(':').append(param.toString());
+//            }
+//            return key.toString();
+//        };
+//    }
+
     @Bean
     public KeyGenerator customKeyGenerator() {
         return (target, method, params) -> {
             StringBuilder key = new StringBuilder();
+            key.append(target.getClass().getName()); // add the class name to the key
+            key.append('.');
             key.append(method.getName());
             for (Object param : params) {
                 key.append(':').append(param.toString());

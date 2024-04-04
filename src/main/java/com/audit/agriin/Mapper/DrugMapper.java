@@ -47,9 +47,7 @@ public interface DrugMapper extends _Mapper<UUID, DrugRequest, DrugResponse, Dru
 //    default void linkLmrs(@MappingTarget Drug drug) {
 //        drug.getLmrs().forEach(lmr -> lmr.setDrug(drug));
 //    }
-//
-    @Override
-    @Mapping(source = "activeMatters", target = "activeMatters")
+
     DrugResponse toResponse(Drug drug);
 //
 //

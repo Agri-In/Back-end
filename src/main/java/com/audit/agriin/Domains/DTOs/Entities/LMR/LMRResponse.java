@@ -3,10 +3,7 @@ package com.audit.agriin.Domains.DTOs.Entities.LMR;
 import com.audit.agriin.Domains.DTOs.AbstractResponse;
 import com.audit.agriin.Domains.Enums.Region;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Value;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
@@ -22,6 +19,7 @@ import java.util.UUID;
 @Setter
 @SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LMRResponse extends AbstractResponse<UUID> {
     Region region;

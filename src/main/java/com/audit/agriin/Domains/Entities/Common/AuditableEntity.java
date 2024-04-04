@@ -56,5 +56,5 @@ public abstract class AuditableEntity implements Serializable {
      */
     @Version
     @ReadOnlyProperty
-    private Long version = 0L;
+    private Long version;
 }

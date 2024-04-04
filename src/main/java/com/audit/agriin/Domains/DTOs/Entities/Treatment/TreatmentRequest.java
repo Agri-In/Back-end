@@ -7,6 +7,8 @@ import com.audit.agriin.Domains.Enums.TreatmentType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -19,14 +21,11 @@ import java.util.UUID;
 public record TreatmentRequest(
         List<UUID> parcelIds,
         UUID drugId,
-        LocalDate applicationDate,
-        LocalTime applicationStartTime,
-        LocalTime applicationEndTime,
-        double quantity,
+        Date applicationDate,
+        Time applicationStartTime,
+        Time applicationEndTime,
         ConcentrationUnit concentrationUnit,
-        double bouillie,
         double totalQuantity,
-        double concentration,
         TreatmentType treatmentType,
         DrugApplicationStage drugApplicationStage,
         UUID operatorId,

@@ -37,7 +37,7 @@ import java.util.UUID;
 @Validated
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-@CacheConfig(cacheNames = "EntityCache")
+@CacheConfig(cacheNames = "EntityCache", keyGenerator = "customKeyGenerator")
 public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Response, Entity extends _Entity<ID>, Repository extends JpaRepository<Entity, ID>, Mapper extends _Mapper<ID, Req, Res, Entity>> implements _Service<Req, Res, ID> {
 
     Mapper mapper;
@@ -180,7 +180,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
      */
     @Transactional
     @CacheEvict(
-//            key = "#response.id",
+            key = "#response.id",
             allEntries = true
     )
     public Boolean delete(@Valid Res response) {

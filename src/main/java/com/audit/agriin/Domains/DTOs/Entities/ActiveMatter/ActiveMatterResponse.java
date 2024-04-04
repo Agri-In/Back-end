@@ -1,26 +1,22 @@
 package com.audit.agriin.Domains.DTOs.Entities.ActiveMatter;
 
-import com.audit.agriin.Domains.DTOs.AbstractResponse;
 import com.audit.agriin.Domains.DTOs._Response;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * DTO for {@link com.audit.agriin.Domains.Entities.Business.ActiveMatter}
- */
+
+@Getter
+@Setter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ActiveMatterResponse extends AbstractResponse<UUID>{
+public class ActiveMatterResponse implements _Response {
     Timestamp createdAt;
     Timestamp updatedAt;
     Long version;

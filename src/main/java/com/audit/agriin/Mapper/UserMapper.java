@@ -20,8 +20,9 @@ import java.util.UUID;
 public interface UserMapper extends _Mapper<UUID, UserRequest, UserResponses, User> {
 
 //    @IterableMapping(qualifiedByName = "toResponse")
-//    @Override
-//    List<UserResponses> toResponse(List<User> user);
+    @Override
+    @Mapping(target = "userGroups", source = "userGroups")
+    List<UserResponses> toResponse(List<User> user);
 
 //    @IterableMapping(qualifiedByName = "toResponseFromEntity")
 //    @Override
@@ -34,8 +35,9 @@ public interface UserMapper extends _Mapper<UUID, UserRequest, UserResponses, Us
 //
 //    User toEntity(UserResponses userResponses);
 //
-//    @Override
-//    UserResponses toResponse(User user);
+    @Override
+    @Mapping(target = "userGroups", source = "userGroups")
+    UserResponses toResponse(User user);
 //
 //    @IterableMapping(qualifiedByName = "toEntity")
 //    List<User> toEntity(List<UserRequest> userRequest);

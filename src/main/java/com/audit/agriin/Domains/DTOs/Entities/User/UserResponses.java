@@ -2,7 +2,9 @@ package com.audit.agriin.Domains.DTOs.Entities.User;
 
 import com.audit.agriin.Domains.DTOs.AbstractResponse;
 import com.audit.agriin.Domains.DTOs.Basic.AddressDto;
+import com.audit.agriin.Domains.DTOs.Entities.Group.GroupResponse;
 import com.audit.agriin.Domains.Entities.NonCorporate.Group;
+import com.audit.agriin.Domains.Entities.NonCorporate.User;
 import com.audit.agriin.Domains.Enums.Gender;
 import com.audit.agriin.Domains.Enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -16,6 +18,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -88,7 +92,7 @@ public class UserResponses extends AbstractResponse<UUID> {
     /**
      * The group of the user.
      */
-    Group group;
+    Set<GroupResponse> userGroups;
 
     /**
      * Indicates whether the user's account is enabled.

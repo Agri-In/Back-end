@@ -1,6 +1,5 @@
 package com.audit.agriin.Services.Implemetation;
 
-import com.audit.agriin.Domains.DTOs.Entities.ActiveMatter.ActiveMatterResponse;
 import com.audit.agriin.Domains.DTOs.Entities.Drug.DrugRequest;
 import com.audit.agriin.Domains.DTOs.Entities.Drug.DrugResponse;
 import com.audit.agriin.Domains.Entities.Business.ActiveMatter;
@@ -11,7 +10,11 @@ import com.audit.agriin.Repositories.DrugRepository;
 import com.audit.agriin.Services.Specification.DrugService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -32,6 +35,16 @@ public class DrugServiceImp extends _ServiceImp<UUID, DrugRequest, DrugResponse,
 
 
     @Override
+    @Caching(
+            evict = {
+                    @CacheEvict(
+                            key = "#result.get()",
+                            allEntries = true,
+                            condition = "#result.get() != null"
+                    )
+            }
+    )
+    @Transactional
     public Optional<DrugResponse> create(DrugRequest request) {
         System.out.println(request.toString());
         List<ActiveMatter> activeMatters = activeMatterRepository.findAllById(request.activeMatterIds());

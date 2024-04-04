@@ -112,6 +112,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     @Transactional
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        System.out.println(request.password());
+        System.out.println(request.email());
         authenticateUser(request.email(), request.password());
 
         var user = userService.findByEmail(request.email());

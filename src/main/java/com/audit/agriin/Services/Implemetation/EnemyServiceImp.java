@@ -8,6 +8,7 @@ import com.audit.agriin.Repositories.EnemyRepository;
 import com.audit.agriin.Services.Specification.EnemyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("enemies")
 public class EnemyServiceImp extends _ServiceImp<UUID, EnemyRequest, EnemyResponse, Enemy, EnemyRepository, EnemyMapper> implements EnemyService {
 
 }

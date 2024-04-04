@@ -32,7 +32,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
  * @author <a href="mailto:sidatnouhi@gmail.com">NOUHI Sidati</a>
  */
 @Configuration
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
 @EnableMethodSecurity
 public class SecurityConfiguration {
@@ -113,10 +113,10 @@ public class SecurityConfiguration {
             "X-Requested-With"
     );
     private final LogoutHandler logoutHandler;
-    private final CsrfCookieFilter csrfCookieFilter;
+//    private final CsrfCookieFilter csrfCookieFilter;
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final SpaCsrfTokenRequestHandler spaCsrfTokenRequestHandler;
+//    private final SpaCsrfTokenRequestHandler spaCsrfTokenRequestHandler;
 
     /**
      * Configures the security filter chain for the application.
@@ -204,19 +204,19 @@ public class SecurityConfiguration {
         return source;
     }
 
-    /**
-     * Creates and configures the CSRF token repository.
-     * This repository is responsible for storing and managing CSRF tokens,
-     * using cookies as the storage mechanism.
-     *
-     * @return A CsrfTokenRepository object for managing CSRF tokens.
-     */
-    @Bean
-    public CsrfTokenRepository csrfTokenRepository() {
-        CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        repository.setCookiePath("/");
-        return repository;
-    }
+//    /**
+//     * Creates and configures the CSRF token repository.
+//     * This repository is responsible for storing and managing CSRF tokens,
+//     * using cookies as the storage mechanism.
+//     *
+//     * @return A CsrfTokenRepository object for managing CSRF tokens.
+//     */
+//    @Bean
+//    public CsrfTokenRepository csrfTokenRepository() {
+//        CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+//        repository.setCookiePath("/");
+//        return repository;
+//    }
 
     /**
      * Generates an array of AntPathRequestMatcher objects based on a list of URL patterns.

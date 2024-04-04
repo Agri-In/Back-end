@@ -101,7 +101,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
         return mapper.toResponse(user);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_MANAGER')")
+    @PreAuthorize("hasAuthority('QUALITY_MANAGER')")
     public UserResponses changeRole(ChangeGroupRequest changeGroupRequest) {
         try {
             User user = mapper.toEntityFromResponse(changeGroupRequest.user());

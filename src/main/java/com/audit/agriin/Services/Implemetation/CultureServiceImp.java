@@ -8,6 +8,7 @@ import com.audit.agriin.Repositories.CultureRepository;
 import com.audit.agriin.Services.Specification.CultureService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -15,5 +16,6 @@ import java.util.UUID;
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Cacheable("cultures")
 public class CultureServiceImp extends _ServiceImp<UUID, CultureRequest, CultureResponse, Culture, CultureRepository, CultureMapper> implements CultureService {
 }
