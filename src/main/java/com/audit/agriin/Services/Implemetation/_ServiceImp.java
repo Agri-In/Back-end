@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
@@ -82,6 +83,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             key = "#pageable.pageNumber + ' : ' + #pageable.pageSize + ' : ' + #pageable.sort"
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public RestPage<Res> getAll(Pageable pageable) {
         assert repository != null;
         assert mapper != null;
@@ -107,6 +109,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             }
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public Optional<Res> create(@Valid Req request) {
         assert mapper != null;
         assert repository != null;
@@ -134,6 +137,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             key = "#response"
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public Optional<Res> update(@Valid Res response) {
         assert mapper != null;
         assert repository != null;
@@ -183,6 +187,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             key = "#response.id",
             allEntries = true
     )
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Boolean delete(@Valid Res response) {
         assert mapper != null;
         assert repository != null;

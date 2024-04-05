@@ -114,6 +114,7 @@ public class Treatment extends AbstractEntity<UUID> {
         this.quantity = this.totalQuantity / totalSurface.get();
     }
 
+    // TODO: fix the calculation of bouillie
     private void calculateBouillie() {
         double dosage = drug.getDosage();
         this.bouillie = this.quantity / dosage * 100;

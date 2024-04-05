@@ -7,6 +7,8 @@ import com.audit.agriin.Domains.DTOs.Entities.User.UserResponses;
 import com.audit.agriin.Services.Implemetation.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -45,12 +47,12 @@ public class UserController extends _Controller<UUID, UserRequest, UserResponses
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/change-role")
-    public ResponseEntity<?> changeRole(
+    @PatchMapping("/change-group")
+    public ResponseEntity<?> changeGroup(
             @RequestBody ChangeGroupRequest changeRoleRequest
-    ) {
-        service.changeRole(changeRoleRequest);
-        return ResponseEntity.ok().build();
+    )
+    {
+        return ResponseEntity.ok(service.changeGroup(changeRoleRequest));
     }
 
     /**
@@ -61,5 +63,10 @@ public class UserController extends _Controller<UUID, UserRequest, UserResponses
     @GetMapping("/current")
     public ResponseEntity<UserResponses> getCurrentUser() {
         return ResponseEntity.ok(service.getCurrentUser());
+    }
+
+    @GetMapping("/connected-users")
+    public ResponseEntity<Page<UserResponses>> getConnectedUsers(Pageable pageable){
+        return ResponseEntity.ok(service.findConnectedUsers(pageable));
     }
 }

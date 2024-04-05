@@ -1,5 +1,6 @@
 package com.audit.agriin.Services.Implemetation;
 
+import com.audit.agriin.Domains.Entities.NonCorporate.User;
 import com.audit.agriin.Repositories.TokenRepository;
 import com.audit.agriin.Services.Specification.JwtService;
 import io.jsonwebtoken.Claims;
@@ -91,25 +92,21 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
-        List<String> roles = userDetails.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(authority -> authority.startsWith("ROLE_"))
-                .collect(Collectors.toList());
+//        List<String> roles = userDetails.getAuthorities()
+//                .stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.toList());
 
-        List<String> permissions = userDetails.getAuthorities()
-                .stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(authority -> !authority.startsWith("ROLE_"))
-                .collect(Collectors.toList());
+        User user = (User) userDetails;
+        List<String> groups = user.getGroupNames();
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .claim("roles", roles)
-                .claim("permissions", permissions)
+                .claim("roles", groups) // Add groups to the JWT claims
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

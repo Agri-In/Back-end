@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,7 @@ public class ParcelServiceImp extends _ServiceImp<UUID, ParcelRequest, ParcelRes
             }
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public Optional<ParcelResponse> create(ParcelRequest request) {
         Optional<Firm> firm = Optional.ofNullable(firmRepository.findById(request.firmId()).orElseThrow(() -> new ResourceNotFoundException("firm with id not found")));
         Parcel parcel = mapper.toEntityFromRequest(request);

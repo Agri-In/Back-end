@@ -10,10 +10,10 @@ import java.util.Set;
 
 public record ChangeGroupRequest(
         @NotBlank(message = "User is required")
-        UserResponses user,
+        String email,
 
-        @NotNull(message = "Role is required")
-        Set<Group> groups
+        @NotNull(message = "Group names is required")
+        String groupName
 
 ) implements _Request {
 }

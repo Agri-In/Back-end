@@ -38,7 +38,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
 
     private static final List<String> WHITE_LIST_URL = List.of(
-            "/api/v1/**",
             "/api/v1/auth/**",
             "/api/v1/auth/register",
             "/api/v1/auth/authenticate",
@@ -53,16 +52,19 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html",
-            "/actuator/**",
-            "/api/v1/audit/**",
-            "/api/v1/auditType/**",
-            "/api/v1/audit/reports/**",
-            "/api/v1/audit/create",
-            "/api/v1/auditType/create"
+            "/actuator/**"
+//            "/api/v1/audit-type/**"
+//            "/api/v1/audit/**",
+//            "/api/v1/auditType/**",
+//            "/api/v1/audit/reports/**",
+//            "/api/v1/audit/create",
+//            "/api/v1/auditType/create"
     );
 
     private final List<String> ADMIN_PERMITTED_URL = List.of(
             "/api/v1/admin/**",
+            "/api/v1/**/create",
+            "/api/v1/users/**",
             "/api/v1/permissions/**"
     );
 
@@ -76,11 +78,12 @@ public class SecurityConfiguration {
     );
 
     private final List<String> DEFAULT_USER_PERMITTED_URL = List.of(
-            "/api/v1/request_access/**"
+            "/api/v1/account/request_access",
+            "/api/v1/audit-type/**"
     );
 
     private static final List<String> ALLOW_ORIGIN = List.of(
-            "*"
+            " http://localhost:4200/"
     );
     private static final List<String> ALLOW_METHODS = List.of(
             "GET",

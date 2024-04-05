@@ -47,7 +47,7 @@ public interface UserService extends _Service<UserRequest, UserResponses, UUID> 
      * @param email The email of the user to retrieve.
      * @return Optional containing the user if found, otherwise empty.
      */
-    User findByEmail(String email);
+    User findUserByEmail(String email);
 
     /**
      * Changes the password for the user identified by the connected user principal.
