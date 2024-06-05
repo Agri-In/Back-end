@@ -15,9 +15,9 @@ import java.util.UUID;
 @RequestMapping("/api/v1/audit-type")
 public class AuditTypeController extends _Controller<UUID, AuditTypeRequest, AuditTypeResponse, AuditTypeServiceImp>{
 
-    @PostMapping("/string")
-    private String returnString(){
-        System.out.println("hhh");
-        return "Hello World";
-    }
+//    @PostMapping("/string")
+//    private String returnString(){
+//        System.out.println("hhh");
+//        return "Hello World";
+//    }
 }

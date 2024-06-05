@@ -8,10 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Entity(name = "principle_groups")
 @Getter
@@ -28,4 +27,8 @@ public class Group extends AbstractEntity<UUID> {
 
     @ManyToMany(mappedBy = "userGroups")
     private Set<User> users = new HashSet<>();
+
+    @OneToMany(mappedBy = "group")
+    private Set<GroupRequest> groupRequests = new HashSet<>();
+
 }

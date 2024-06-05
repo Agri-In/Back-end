@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a user entity in the system.
@@ -114,6 +115,9 @@ public class User extends AbstractEntity<UUID> implements UserDetails {
     @Embedded
     private Address address = new Address();
 
+    @OneToMany(mappedBy = "user")
+    private Set<GroupRequest> groupRequests = new HashSet<>();
+
     /**
      * The user's group.
      */
@@ -165,6 +169,12 @@ public class User extends AbstractEntity<UUID> implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(Group.class.getName()));
+    }
+
+    public List<String> getGroupNames() {
+        return this.userGroups.stream()
+                .map(Group::getName)
+                .collect(Collectors.toList());
     }
 
     /**

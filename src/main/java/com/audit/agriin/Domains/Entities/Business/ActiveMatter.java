@@ -27,7 +27,10 @@ public class ActiveMatter extends AbstractEntity<UUID>{
     @Column(name = "active_matter_name")
     private String name;
 
-    @OneToMany
+//    @ManyToOne
+//    private LMR lmr;
+
+    @ManyToMany(mappedBy = "activeMatters", fetch = FetchType.LAZY)
     private List<Drug> drugs;
 
 }

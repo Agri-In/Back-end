@@ -3,12 +3,8 @@ package com.audit.agriin.Mapper;
 import com.audit.agriin.Domains.DTOs.Entities.ActiveMatter.ActiveMatterRequest;
 import com.audit.agriin.Domains.DTOs.Entities.ActiveMatter.ActiveMatterResponse;
 import com.audit.agriin.Domains.Entities.Business.ActiveMatter;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Mapper(
@@ -17,21 +13,17 @@ import java.util.UUID;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface ActiveMatterMapper extends _Mapper<UUID, ActiveMatterRequest, ActiveMatterResponse, ActiveMatter> {
+    ActiveMatter toEntity(ActiveMatterResponse activeMatterResponse);
+
 //    ActiveMatter toEntity(ActiveMatterRequest activeMatterRequest);
-//
-////    ActiveMatterRequest toDto(ActiveMatter activeMatter);
-//
+
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    ActiveMatter partialUpdate(ActiveMatterRequest activeMatterRequest, @MappingTarget ActiveMatter activeMatter);
+
 //    ActiveMatter toEntity(ActiveMatterResponse activeMatterResponse);
 
-////    @Override
-//    ActiveMatterResponse toResponse(ActiveMatter activeMatter);
-//
-////    @Override
-//    List<ActiveMatterResponse> toResponse(List<ActiveMatter> entity);
-//
-//    ActiveMatterResponse toResponseFromEntity(ActiveMatter activeMatter);
-//
-////    @Override
-//    List<ActiveMatterResponse> toResponseFromEntity(List<ActiveMatter> entity);
+//    ActiveMatterResponse toDto1(ActiveMatter activeMatter);
 
+//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+//    ActiveMatter partialUpdate(ActiveMatterResponse activeMatterResponse, @MappingTarget ActiveMatter activeMatter);
 }

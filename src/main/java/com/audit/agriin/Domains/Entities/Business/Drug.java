@@ -24,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "drugs")
 public class Drug extends AbstractEntity<UUID> {
 
     @Column(name = "commercial_name", unique = true, nullable = false)
@@ -32,9 +33,13 @@ public class Drug extends AbstractEntity<UUID> {
     @Column(name = "drug_description")
     private String description;
 
-    @ManyToOne
-    private ActiveMatter activeMatter;
-
+    @ManyToMany
+    @JoinTable(
+            name = "drug_active_matter",
+            joinColumns = @JoinColumn(name = "drug_id"),
+            inverseJoinColumns = @JoinColumn(name = "active_matter_id")
+    )
+    private Set<ActiveMatter> activeMatters = new HashSet<>();
     @Column(name = "drug_dosage")
     private double dosage;
 
@@ -58,6 +63,7 @@ public class Drug extends AbstractEntity<UUID> {
     private DrugType drugType;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "drug_character")
     private DrugCharacter drugCharacter;
 
     @OneToMany(mappedBy = "drug", fetch = FetchType.LAZY)

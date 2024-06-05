@@ -10,11 +10,6 @@ import java.util.UUID;
  * DTO for {@link com.audit.agriin.Domains.Entities.Business.Parcel}
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record ParcelRequest(String name, double surface, FirmDto firm) implements _Request {
-    /**
-     * DTO for {@link com.audit.agriin.Domains.Entities.Business.Firm}
-     */
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    public record FirmDto(UUID id) implements _Request {
-    }
+public record ParcelRequest(String name, double surface, UUID firmId) implements _Request {
+
 }

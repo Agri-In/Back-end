@@ -3,6 +3,7 @@ package com.audit.agriin.Services.Implemetation;
 import com.audit.agriin.Domains.DTOs.App.RestPage;
 import com.audit.agriin.Domains.DTOs._Request;
 import com.audit.agriin.Domains.DTOs._Response;
+import com.audit.agriin.Domains.Entities.Business.Operator;
 import com.audit.agriin.Domains.Entities.Common._Entity;
 import com.audit.agriin.Exceptions.ResourceNotCreatedException;
 import com.audit.agriin.Mapper._Mapper;
@@ -15,11 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Generic service implementation with common CRUD operations.
@@ -35,7 +38,7 @@ import java.util.Optional;
 @Validated
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
-@CacheConfig(cacheNames = "EntityCache")
+@CacheConfig(cacheNames = "EntityCache", keyGenerator = "customKeyGenerator")
 public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Response, Entity extends _Entity<ID>, Repository extends JpaRepository<Entity, ID>, Mapper extends _Mapper<ID, Req, Res, Entity>> implements _Service<Req, Res, ID> {
 
     Mapper mapper;
@@ -80,6 +83,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             key = "#pageable.pageNumber + ' : ' + #pageable.pageSize + ' : ' + #pageable.sort"
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public RestPage<Res> getAll(Pageable pageable) {
         assert repository != null;
         assert mapper != null;
@@ -105,6 +109,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             }
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public Optional<Res> create(@Valid Req request) {
         assert mapper != null;
         assert repository != null;
@@ -132,6 +137,7 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
             key = "#response"
     )
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('ADMIN', 'QUALITY_MANAGER', 'ACCOUNT_MANAGER')")
     public Optional<Res> update(@Valid Res response) {
         assert mapper != null;
         assert repository != null;
@@ -178,9 +184,10 @@ public abstract class _ServiceImp<ID, Req extends _Request, Res extends _Respons
      */
     @Transactional
     @CacheEvict(
-//            key = "#response.id",
+            key = "#response.id",
             allEntries = true
     )
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Boolean delete(@Valid Res response) {
         assert mapper != null;
         assert repository != null;

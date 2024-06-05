@@ -39,7 +39,8 @@ public class Audit extends AbstractEntity<UUID> {
     private FileOwner storage;
 
     @Enumerated(EnumType.STRING)
-    private AuditStatus status = AuditStatus.PENDING;
+    @Column(columnDefinition = "TEXT Default 'PENDING'")
+    private AuditStatus status;
 
 
 }

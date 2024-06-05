@@ -178,7 +178,7 @@ public class OauthServiceImpl implements OauthService {
      * @return The retrieved or newly created User entity.
      */
     private User getUserFromPayload(GoogleIdToken.Payload payload) {
-        return repository.findByEmail(payload.getEmail())
+        return repository.findUserByEmail(payload.getEmail())
                 .orElseGet(() -> createUserFromPayload(payload));
     }
 

@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -111,10 +112,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      * @return AuthenticationResponse containing new access and refresh tokens
      */
     @Transactional
+//    @PreAuthorize("hasAnyAuthority('DEFAULT_USER', 'ADMIN', 'ACCOUNT_MANAGER', 'QUALITY_MANAGER')")
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticateUser(request.email(), request.password());
-
-        var user = userService.findByEmail(request.email());
+        User user = userService.findUserByEmail(request.email());
         return createAndSaveTokens(user);
     }
 
@@ -127,7 +128,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         var refreshToken = extractRefreshToken(request);
-        var user = userService.findByEmail(
+        var user = userService.findUserByEmail(
                 jwtService.extractUsername(refreshToken)
         );
 
@@ -152,7 +153,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var userEmail = jwtService.extractUsername(jwt);
 
         if (userEmail != null) {
-            var user = userService.findByEmail(userEmail);
+            var user = userService.findUserByEmail(userEmail);
             var isValid = jwtService.isTokenValid(jwt, user);
 
             if (!isValid)

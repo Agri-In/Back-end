@@ -38,9 +38,11 @@ public interface AuditMapper extends _Mapper<UUID, AuditRequest, AuditResponse, 
 
 //    AuditResponse toResponseFromEntity(Audit audit);
 
-//    Audit toEntity(AuditRequest auditRequest);
+//    @Mapping(source = "firmIds", target = "firms.id")
+//    @Mapping(source = "auditTypeId", target = "auditType.id")
+//    Audit toEntityFromRequest(AuditRequest auditRequest);
 
-//    List<Audit> toEntity(List<AuditRequest> entity);
+    List<Audit> toEntityFromRequest(List<AuditRequest> entity);
 //
 //    @Override
 //    List<AuditResponse> toResponse(List<Audit> entity);

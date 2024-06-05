@@ -38,9 +38,9 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfiguration {
 
     private static final List<String> WHITE_LIST_URL = List.of(
-            "/api/v1/**",
             "/api/v1/auth/**",
             "/api/v1/auth/register",
+            "/api/v1/auth/authenticate",
             "/api/v1/Oauth/**",
             "/v2/api-docs",
             "/v3/api-docs",
@@ -52,16 +52,19 @@ public class SecurityConfiguration {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html",
-            "/actuator/**",
-            "/api/v1/audit/**",
-            "/api/v1/auditType/**",
-            "/api/v1/audit/reports/**",
-            "/api/v1/audit/create",
-            "/api/v1/auditType/create"
+            "/actuator/**"
+//            "/api/v1/audit-type/**"
+//            "/api/v1/audit/**",
+//            "/api/v1/auditType/**",
+//            "/api/v1/audit/reports/**",
+//            "/api/v1/audit/create",
+//            "/api/v1/auditType/create"
     );
 
     private final List<String> ADMIN_PERMITTED_URL = List.of(
             "/api/v1/admin/**",
+            "/api/v1/**/create",
+            "/api/v1/users/**",
             "/api/v1/permissions/**"
     );
 
@@ -75,11 +78,12 @@ public class SecurityConfiguration {
     );
 
     private final List<String> DEFAULT_USER_PERMITTED_URL = List.of(
-            "/api/v1/request_access/**"
+            "/api/v1/account/request_access",
+            "/api/v1/audit-type/**"
     );
 
     private static final List<String> ALLOW_ORIGIN = List.of(
-            "*"
+            " http://localhost:4200/"
     );
     private static final List<String> ALLOW_METHODS = List.of(
             "GET",
@@ -112,10 +116,10 @@ public class SecurityConfiguration {
             "X-Requested-With"
     );
     private final LogoutHandler logoutHandler;
-    private final CsrfCookieFilter csrfCookieFilter;
+//    private final CsrfCookieFilter csrfCookieFilter;
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final SpaCsrfTokenRequestHandler spaCsrfTokenRequestHandler;
+//    private final SpaCsrfTokenRequestHandler spaCsrfTokenRequestHandler;
 
     /**
      * Configures the security filter chain for the application.
@@ -203,19 +207,19 @@ public class SecurityConfiguration {
         return source;
     }
 
-    /**
-     * Creates and configures the CSRF token repository.
-     * This repository is responsible for storing and managing CSRF tokens,
-     * using cookies as the storage mechanism.
-     *
-     * @return A CsrfTokenRepository object for managing CSRF tokens.
-     */
-    @Bean
-    public CsrfTokenRepository csrfTokenRepository() {
-        CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
-        repository.setCookiePath("/");
-        return repository;
-    }
+//    /**
+//     * Creates and configures the CSRF token repository.
+//     * This repository is responsible for storing and managing CSRF tokens,
+//     * using cookies as the storage mechanism.
+//     *
+//     * @return A CsrfTokenRepository object for managing CSRF tokens.
+//     */
+//    @Bean
+//    public CsrfTokenRepository csrfTokenRepository() {
+//        CookieCsrfTokenRepository repository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+//        repository.setCookiePath("/");
+//        return repository;
+//    }
 
     /**
      * Generates an array of AntPathRequestMatcher objects based on a list of URL patterns.

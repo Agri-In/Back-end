@@ -34,11 +34,11 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 ),
                 @Server(
                         description = "Test ENV",
-                        url = "http://localhost:8084    "
+                        url = "http://localhost:8090"
                 ),
                 @Server(
                         description = "Local ENV",
-                        url = "http://localhost:8085"
+                        url = "http://localhost:8090"
                 )
         },
         security = {

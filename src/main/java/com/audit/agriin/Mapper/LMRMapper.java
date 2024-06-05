@@ -14,24 +14,30 @@ import java.util.UUID;
         componentModel = MappingConstants.ComponentModel.SPRING
 )
 public interface LMRMapper extends _Mapper<UUID, LMRRequest, LMRResponse, LMR> {
-    @Mapping(source = "activeMatterId", target = "activeMatter.id")
-    LMR toEntity(LMRRequest LMRRequest);
+//    @Mapping(source = "activeMatterId", target = "activeMatter.id")
+//    LMR toEntity(LMRRequest LMRRequest);
 
 
-    @Mapping(source = "activeMatterName", target = "activeMatter.name")
-    @Mapping(source = "activeMatterId", target = "activeMatter.id")
-    LMR toEntity(LMRResponse LMRResponse);
+//    @Mapping(source = "activeMatterName", target = "activeMatter.name")
+//    @Mapping(source = "activeMatterId", target = "activeMatter.id")
+//    LMR toEntity(LMRResponse LMRResponse);
 
 //    @InheritInverseConfiguration(name = "toEntity")
-//    @Override
-//    LMRResponse toResponse(LMR LMR);
-//
+    @Override
+    @Mapping(source = "drug.id", target = "drugId")
+    @Mapping(source = "drug.commercialName", target = "drugName")
+    LMRResponse toResponse(LMR lmr);
+
 //    LMRResponse toResponseFromEntity(LMR LMR);
 
-////    @Override
+////    @Mapping()
 //    List<LMRResponse> toResponseFromEntity(List<LMR> entity);
-//
-////    @Override
+
+//    @Override
 //    List<LMRResponse> toResponse(List<LMR> entity);
+
+    @Override
+    @Mapping(source = "drugId", target = "drug.id")
+    LMR toEntityFromRequest(LMRRequest LMRRequest);
 
 }

@@ -13,6 +13,7 @@ import com.audit.agriin.Exceptions.NoAuthenticateUser;
 import com.audit.agriin.Exceptions.ResourceNotCreatedException;
 import com.audit.agriin.Exceptions.ResourceNotFoundException;
 import com.audit.agriin.Mapper.UserMapper;
+import com.audit.agriin.Repositories.GroupRepository;
 import com.audit.agriin.Repositories.TokenRepository;
 import com.audit.agriin.Repositories.UserRepository;
 import com.audit.agriin.Services.Specification.UserService;
@@ -54,6 +55,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
 
     private final PasswordEncoder passwordEncoder;
     private final TokenRepository tokenRepository;
+    private final GroupRepository groupRepository;
 
     public User saveUser(User user) {
         try {
@@ -97,16 +99,24 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
             throw new NoAuthenticateUser("User not authenticated");
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        User user = findByEmail(userDetails.getUsername());
+        User user = findUserByEmail(userDetails.getUsername());
         return mapper.toResponse(user);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_MANAGER')")
-    public UserResponses changeRole(ChangeGroupRequest changeGroupRequest) {
+    /**
+     * Changes the group of the specified user.
+     *
+     * @param changeGroupRequest The request containing the user and the new group.
+     * @return The updated user.
+     */
+    @Override
+//    @PreAuthorize("hasAuthority('QUALITY_MANAGER')")
+    public UserResponses changeGroup(ChangeGroupRequest changeGroupRequest) {
         try {
-            User user = mapper.toEntityFromResponse(changeGroupRequest.user());
-            user = this.findByEmail(user.getEmail());
-            user.setUserGroups(changeGroupRequest.groups());
+            User user = this.findUserByEmail(changeGroupRequest.email());
+            Group group = groupRepository.findGroupByName(changeGroupRequest.groupName());
+            user.getUserGroups().add(group);
+            user.setUserGroups(user.getUserGroups());
             return mapper.toResponse(repository.save(user));
         } catch (Exception e) {
             throw new ResourceNotCreatedException("User Role not updated");
@@ -122,7 +132,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @return A paginated list of the group users.
      */
 //    @Cacheable("managers")
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public Page<UserResponses> getAllByGroup(Group group, Pageable pageable) {
         return repository.findAllByUserGroupsContaining(group , pageable)
                 .map(mapper::toResponse);
@@ -135,9 +145,9 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @param email The email of the user to retrieve.
      * @return Optional containing the user if found, otherwise empty.
      */
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public User findByEmail(String email) {
-        return repository.findByEmail(email)
+//    @PreAuthorize("hasAuthority('ADMIN')"):
+    public User findUserByEmail(String email) {
+        return repository.findUserByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
@@ -147,16 +157,11 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @param username The ID of the user to retrieve.
      * @return Optional containing the user if found, otherwise empty.
      */
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public Optional<User> findById(UUID username) {
         return repository.findById(username);
     }
 
-    @Override
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public UserResponses changeGroup(ChangeGroupRequest changeGroupRequest) {
-        return null;
-    }
 
     /**
      * Changes the password of the currently logged-in user.
@@ -200,7 +205,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      * @param pageable The pagination information.
      * @return A paginated list of connected users.
      */
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public Page<UserResponses> findConnectedUsers(Pageable pageable) {
         return repository.findAllByStatus(UserStatus.ONLINE, pageable)
                 .map(mapper::toResponse);
@@ -229,7 +234,7 @@ public class UserServiceImpl extends _ServiceImp<UUID, UserRequest, UserResponse
      *
      * @param user User for whom tokens are revoked
      */
-    @PreAuthorize("hasAuthority('ADMIN')")
+//    @PreAuthorize("hasAuthority('ADMIN')")
     public void revokeAllUserTokens(User user) {
         var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
         if (!validUserTokens.isEmpty()) {

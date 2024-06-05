@@ -6,6 +6,7 @@ import com.audit.agriin.Domains.Enums.Region;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,8 +29,8 @@ public class LMR extends AbstractEntity<UUID> {
     @Column(name = "lmr_name_mg/kg")
     private String residue_mg_kg;
 
-    @OneToOne
-    private ActiveMatter activeMatter;
+//    @OneToMany(mappedBy = "lmr", fetch = FetchType.LAZY)
+//    private Set<ActiveMatter> activeMatters;
 
     @ManyToOne
     private Drug drug;
