@@ -1,68 +1,104 @@
-services:
-  agriin:
-    image: 'postgres:latest'
-    container_name: database
-    environment:
-      - POSTGRES_DB=agriin
-      - POSTGRES_PASSWORD=sidati@nouhi
-      - POSTGRES_USER=postgres
-      - PGDATA=/data/postgres
-    restart: always
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "postgres" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    ports:
-      - "5433:5432"
-    volumes:
-      - type: volume
-        source: postgres-db
-        target: /var/lib/postgresql/data
-    networks:
-      - agriin
+#version: '1.0'
+#
+#services:
+#  agriin:
+#    image: 'postgres:latest'
+#    container_name: database
+#    environment:
+#      - POSTGRES_DB=agriin
+#      - POSTGRES_PASSWORD=postgres
+#      - POSTGRES_USER=sidati@nouhi
+#      - PGDATA=/data/postgres
+#    restart: always
+#    healthcheck:
+#      test: ["CMD", "pg_isready", "-U", "postgres"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 5
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - type: volume
+#        source: postgres-db
+#        target: /var/lib/postgresql/data
+#    networks:
+#      - agriin
+#
+#  agriin-cache:
+#    image: 'redis:latest'
+#    container_name: agriin-cache
+#    hostname: redis
+#    healthcheck:
+#      test: ["CMD", "redis-cli", "ping"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 5
+#    ports:
+#      - "6379:6379"
+#    restart: always
+#    networks:
+#      - agriin
+#
+#  app:
+#    container_name: agriin
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    ports:
+#      - "8090:8090"
+#    depends_on:
+#      agriin:
+#        condition: service_healthy
+#      agriin-cache:
+#        condition: service_healthy
+#    restart: no
+#    networks:
+#      - agriin
+#
+#networks:
+#  agriin:
+#    attachable: true
+#    name: agriin
+#    driver: bridge
+#    enable_ipv6: true
+#    ipam:
+#      config:
+#        - subnet: 2001:0DB8::/112
+#
+#volumes:
+#  postgres-db:
+#    driver: local
 
-  agriin-cache:
-    image: 'redis:latest'
-    container_name: agriin-cache
-    hostname: redis
-    healthcheck:
-      test: [ "CMD", "redis-cli", "ping" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: agriin_app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/agriin
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: sidati@nouhi
+      SPRING_REDIS_HOST: redis
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:16
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: agriin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: sidati@nouhi
+
+  redis:
+    image: redis:7
+    container_name: redis-server
     ports:
       - "6379:6379"
-    restart: always
-    networks:
-      - agriin
 
-  app:
-    container_name: agriin
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8083:8084"
-    depends_on:
-      agriin:
-        condition: service_healthy
-      agriin-cache:
-        condition: service_healthy
-    restart: no
-    networks:
-      - agriin
-
-networks:
-  agriin:
-    attachable: true
-    name: agriin
-    driver: bridge
-    enable_ipv6: true
-    ipam:
-      config:
-        - subnet: 2001:0DB8::/112
-
-volumes:
-  postgres-db:
-    driver: local
