@@ -69,26 +69,24 @@
 #  postgres-db:
 #    driver: local
 
-version: '3.8'
-
 services:
   app:
     build: .
     container_name: agriin_app
     ports:
-      - "8080:8080"
+      - "8080:8090"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/agriin
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: sidati@nouhi
-      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_HOST: agriin-cache
     depends_on:
       - db
-      - redis
+      - cache
 
   db:
-    image: postgres:16
-    container_name: postgres-db
+    image: postgres:latest
+    container_name: agriin-db
     ports:
       - "5432:5432"
     environment:
@@ -96,9 +94,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: sidati@nouhi
 
-  redis:
-    image: redis:7
-    container_name: redis-server
+  cache:
+    image: redis:latest
+    container_name: agriin-cache
     ports:
       - "6379:6379"
 
