@@ -5,16 +5,14 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRSaver;
-import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
+//@Component
 public class AuditReport extends _Report {
 
     public static final String savePath = "src/main/java/com/audit/agriin/Reports/Templates/Audit/";

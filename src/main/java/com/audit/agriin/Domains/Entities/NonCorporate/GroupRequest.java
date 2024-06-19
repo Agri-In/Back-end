@@ -29,5 +29,4 @@ public class GroupRequest extends AbstractEntity<UUID> {
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
 
-    // getters and setters
 }
