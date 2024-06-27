@@ -106,7 +106,8 @@ public class JwtServiceImpl implements JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .claim("roles", groups) // Add groups to the JWT claims
+                .claim("ROLES", groups) // Add groups to the JWT claims
+                .claim("TENANT_ID", "tenant") // Add tenant to the JWT claims
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

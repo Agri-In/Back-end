@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -55,8 +58,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
      */
     @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
-        var group = groupRepository.findGroupByName("DEFAULT_USER");
-        return registerUser(request, group);
+        var defaultUser = groupRepository.findGroupByName("DEFAULT_USER");
+        if (defaultUser == null){
+            var admin = new Group(); admin.setCode("ADM"); admin.setName("ADMIN"); groupRepository.save(admin);
+            var am = new Group(); am.setName("ACCOUNT_MANAGER"); am.setCode("AM"); groupRepository.save(am);
+            var qm = new Group( ); qm.setCode("QM"); qm.setName("QUALITY_MANAGER"); groupRepository.save(qm);
+            defaultUser = new Group(); defaultUser.setCode("DU"); defaultUser.setName("DEFAULT_USER");
+            groupRepository.save(defaultUser); defaultUser = groupRepository.save(defaultUser);
+        }
+        return registerUser(request, defaultUser);
     }
 
     /**
